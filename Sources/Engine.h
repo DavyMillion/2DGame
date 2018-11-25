@@ -15,11 +15,17 @@ public:
 	// Fonctions spécifique au contrôle de la Framerate par le moteur de rendu
 	clock_t DeltaTime(clock_t TimeAtLastFrame);
 	void SetDelay(clock_t CalculationTime, clock_t FramerateDelay);
-	clock_t SetFramerate(int FramePerSecondWanted);
-
+	clock_t CalculRatioFramerate(int FramePerSecondWanted);
+	
+	// Getters & Setters
+	void SetFramerate(clock_t Ratio);
+	void SetTimeAtThisFrame(clock_t Time);
+	clock_t GetRatioFramerate();
+	clock_t GetTimeAtCurrentFrame();
 	// Fonctions spécifique au rendu de la map pour le client
 
 private:
-	long int FrameID;
-
+	long int AFrameID;
+	clock_t ARatioFramerate;
+	clock_t ATimeAtCurrentFrame;
 };

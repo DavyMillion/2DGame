@@ -22,9 +22,31 @@ void CGameEngine::SetDelay(clock_t CalculationTime, clock_t FramerateDelay)
 	return;
 }
 
-clock_t CGameEngine::SetFramerate(int framerate)
+clock_t CGameEngine::CalculRatioFramerate(int framerate)
 {
 	return ((clock_t) 1000 / framerate);
+}
+
+void CGameEngine::SetFramerate(clock_t Ratio)
+{
+	ARatioFramerate = Ratio;
+	return;
+}
+
+void CGameEngine::SetTimeAtThisFrame(clock_t Time)
+{
+	ATimeAtCurrentFrame = Time;
+	return;
+}
+
+clock_t CGameEngine::GetRatioFramerate()
+{
+	return ARatioFramerate;
+}
+
+clock_t CGameEngine::GetTimeAtCurrentFrame()
+{
+	return ATimeAtCurrentFrame;
 }
 
 

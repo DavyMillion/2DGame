@@ -127,21 +127,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Actor.cpp" />
-    <ClCompile Include="GameWorld.cpp" />
-    <ClCompile Include="PlayerController.cpp" />
+    <ClCompile Include="Sources\Actor.cpp" />
     <ClCompile Include="Sources\Client.cpp" />
     <ClCompile Include="Sources\Engine.cpp" />
+    <ClCompile Include="Sources\GameWorld.cpp" />
     <ClCompile Include="Sources\main.cpp" />
+    <ClCompile Include="Sources\PlayerController.cpp" />
+    <ClCompile Include="Sources\SceneRender.cpp" />
     <ClCompile Include="Sources\Server.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Actor.h" />
-    <ClInclude Include="GameWorld.h" />
-    <ClInclude Include="PlayerController.h" />
+    <ClInclude Include="Sources\Actor.h" />
     <ClInclude Include="Sources\Client.h" />
     <ClInclude Include="Sources\Constantes.h" />
     <ClInclude Include="Sources\Engine.h" />
+    <ClInclude Include="Sources\GameWorld.h" />
+    <ClInclude Include="Sources\PlayerController.h" />
+    <ClInclude Include="Sources\SceneRender.h" />
     <ClInclude Include="Sources\SDL_headers.h" />
     <ClInclude Include="Sources\Server.h" />
   </ItemGroup>

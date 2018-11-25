@@ -1,23 +1,26 @@
 #include "SDL_headers.h"
-#include "Constantes.h"
 #include "Engine.h"
 #include "Client.h"
 #include "Server.h"
+#include "SceneRender.h"
+#include "Constantes.h"
 
 int main(int argc, char* args[])
 {
 	// l'instance du client
 	CGameClient* Client = new CGameClient;
 	CGameEngine* GameEngine = Client->GetGameEngineProperties();
+	CGameSceneRender* SceneRender = Client->GetSceneRenderProperties();
 
 	if (!Client->InitialisationSDL()) { return EXIT_ERROR; }
 
 	int bLoop = true;
 
-	// Variables nécessaire au contrôle de la framerate
-	clock_t RatioFramerate = (clock_t) GameEngine->SetFramerate(FRAME_PER_SECOND); // à déléguer
-	clock_t TimeAtThisFrame = clock(); // à déléguer
+	// Contrôle de la framerate délégué à l'objet GameEngine
+	GameEngine->SetFramerate(GameEngine->CalculRatioFramerate(FRAME_PER_SECOND));
+	GameEngine->SetTimeAtThisFrame(clock());
 
+	// boucle principale du jeu
 	while (bLoop)
 	{
 		SDL_Event event;
@@ -32,17 +35,17 @@ int main(int argc, char* args[])
 				switch (event.key.keysym.sym)
 				{
 				case SDLK_RIGHT:
-					Client->SetIncrementPosX(10);
+					SceneRender->SetIncrementPosX(10);
 					break;
 				case SDLK_LEFT:
-					Client->SetIncrementPosX(-10);
+					SceneRender->SetIncrementPosX(-10);
 					break;
 					// Remeber 0,0 in SDL is left-top. So when the user pressus down, the y need to increase
 				case SDLK_DOWN:
-					Client->SetIncrementPosY(10);
+					SceneRender->SetIncrementPosY(10);
 					break;
 				case SDLK_UP:
-					Client->SetIncrementPosY(-10);
+					SceneRender->SetIncrementPosY(-10);
 					break;
 				default:
 					break;
@@ -52,15 +55,19 @@ int main(int argc, char* args[])
 
 		// (1)
 
-		Client->UpdateRendu();
+		SceneRender->UpdateRendu();
 
 		// (2)
 
 		if (event.type != SDL_QUIT)
 		{
 			// on ajuste ici le delay entre le calcul de cette frame et la suivante
-			Client->GetGameEngineProperties()->SetDelay(GameEngine->DeltaTime(TimeAtThisFrame), RatioFramerate); // TimeAtThisFrame correspond ici au temps de l'ancienne frame (de l'itération précédente)
-			TimeAtThisFrame = clock(); // à déléguer
+			Client->GetGameEngineProperties()->SetDelay(
+				GameEngine->DeltaTime(GameEngine->GetTimeAtCurrentFrame()), 
+				GameEngine->GetRatioFramerate()
+			);
+			
+			GameEngine->SetTimeAtThisFrame(clock());
 		}
 	}
 	delete Client;
