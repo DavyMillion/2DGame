@@ -20,9 +20,8 @@ public:
 	// Getters & Setters
 	void SetFramerate(clock_t Ratio);
 	void SetTimeAtThisFrame(clock_t Time);
-	clock_t GetRatioFramerate();
-	clock_t GetTimeAtCurrentFrame();
-	// Fonctions spécifique au rendu de la map pour le client
+	clock_t GetRatioFramerate() const;
+	clock_t GetTimeAtCurrentFrame() const;
 
 private:
 	long int AFrameID;

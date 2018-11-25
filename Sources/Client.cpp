@@ -29,12 +29,12 @@ bool CGameClient::InitialisationSDL()
 	return true;
 }
 
-CGameEngine* CGameClient::GetGameEngineProperties()
+CGameEngine* CGameClient::GetGameEngineProperties() const
 {
 	return AEngine;
 }
 
-CGameSceneRender* CGameClient::GetSceneRenderProperties()
+CGameSceneRender* CGameClient::GetSceneRenderProperties() const
 {
 	return ASceneRender;
 }

@@ -9,17 +9,18 @@ public:
 
 	void UpdateRendu();
 
-	SDL_Renderer* GetRenderer();
-	SDL_Rect* GetCameraTarget();
+
+	// Getters & Setters
+	SDL_Renderer* GetRenderer() const;
+	SDL_Rect* GetCameraTarget() const;
 
 	void SetAttributRenderer(SDL_Renderer*);
-
 	void SetIncrementPosX(int);
 	void SetIncrementPosY(int);
 
 private:
 	SDL_Renderer* ARenderer;
-	SDL_Rect ACameraTarget;
+	SDL_Rect* ACameraTarget;
 };
 
 // Cette classe va gérer la logique du rendu de la scène 2D

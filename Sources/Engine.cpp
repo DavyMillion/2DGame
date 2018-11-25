@@ -39,15 +39,9 @@ void CGameEngine::SetTimeAtThisFrame(clock_t Time)
 	return;
 }
 
-clock_t CGameEngine::GetRatioFramerate()
-{
-	return ARatioFramerate;
-}
+clock_t CGameEngine::GetRatioFramerate() const { return ARatioFramerate; }
 
-clock_t CGameEngine::GetTimeAtCurrentFrame()
-{
-	return ATimeAtCurrentFrame;
-}
+clock_t CGameEngine::GetTimeAtCurrentFrame() const { return ATimeAtCurrentFrame; }
 
 
 bool CGameEngine::InitSDL()

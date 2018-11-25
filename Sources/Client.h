@@ -16,14 +16,13 @@ public:
 	bool InitialisationSDL();
 
 	// Getters (accesseurs)
-	CGameEngine* GetGameEngineProperties();
-	CGameSceneRender* GetSceneRenderProperties();
+	CGameEngine* GetGameEngineProperties() const;
+	CGameSceneRender* GetSceneRenderProperties() const;
 
 	// Setters (mutateurs)
 	void SetAttributWindow(SDL_Window*);
 	
 private:
-
 	SDL_Window* AWindow;
 	CGameEngine* AEngine;
 	CGameSceneRender* ASceneRender;
