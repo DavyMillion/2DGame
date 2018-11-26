@@ -8,17 +8,20 @@
 int main(int argc, char* args[])
 {
 	// l'instance du client
-	CGameClient* Client = new CGameClient;
+	CClient* Client = new CClient;
 	CGameEngine* GameEngine = Client->GetGameEngineProperties();
 	CGameSceneRender* SceneRender = Client->GetSceneRenderProperties();
 
 	if (!Client->InitialisationSDL()) { return EXIT_ERROR; }
 
-	int bLoop = true;
+	// Chargement des textures
+	if (!SceneRender->SetTexturePlayer("./assets/textures/player.png")) { return EXIT_ERROR; }
 
 	// Contrôle de la framerate délégué à l'objet GameEngine
 	GameEngine->SetFramerate(GameEngine->CalculRatioFramerate(FRAME_PER_SECOND));
 	GameEngine->SetTimeAtThisFrame(clock());
+
+	int bLoop = true;
 
 	// boucle principale du jeu
 	while (bLoop)
@@ -35,10 +38,10 @@ int main(int argc, char* args[])
 				switch (event.key.keysym.sym)
 				{
 				case SDLK_RIGHT:
-					SceneRender->SetIncrementPosX(10);
+					SceneRender->SetIncrementAngle(10);
 					break;
 				case SDLK_LEFT:
-					SceneRender->SetIncrementPosX(-10);
+					SceneRender->SetIncrementAngle(-10);
 					break;
 					// Remeber 0,0 in SDL is left-top. So when the user pressus down, the y need to increase
 				case SDLK_DOWN:
@@ -79,7 +82,8 @@ int main(int argc, char* args[])
 // SniffWhatNetworkTellMe()
 // réception des valeurs réseau : thread de réception charge les données dans une structure temp et
 // c'est cette structure temp qui sera évalué ici.
-// On évite de cette manière un éventuel problème d'accès aux valeurs des variables en écriture.
+// On évite de cette manière un éventuel problème d'accès aux valeurs des variables en écriture
+// par un autre thread concurrent.
 
 // (2)
 // établir un tracking système de la position --> GameEngine (?)

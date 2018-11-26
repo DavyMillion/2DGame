@@ -6,12 +6,12 @@
 class CGameEngine; // forward déclaration (C++11) dans le but de limiter les chaines de dépendances
 class CGameSceneRender;
 
-class CGameClient
+class CClient
 {
 public:
 	// Constructeur et Destructeur
-	CGameClient();
-	~CGameClient();
+	CClient();
+	~CClient();
 
 	bool InitialisationSDL();
 

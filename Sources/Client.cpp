@@ -2,7 +2,7 @@
 #include "SceneRender.h"
 #include "Engine.h"
 
-CGameClient::CGameClient()
+CClient::CClient()
 {
 	std::cout << "Création de l'instance du Client" << std::endl;
 
@@ -10,7 +10,7 @@ CGameClient::CGameClient()
 	ASceneRender = new CGameSceneRender;
 }
 
-bool CGameClient::InitialisationSDL()
+bool CClient::InitialisationSDL()
 {
 	if (!AEngine->InitSDL()) 
 		return false;
@@ -29,24 +29,24 @@ bool CGameClient::InitialisationSDL()
 	return true;
 }
 
-CGameEngine* CGameClient::GetGameEngineProperties() const
+CGameEngine* CClient::GetGameEngineProperties() const
 {
 	return AEngine;
 }
 
-CGameSceneRender* CGameClient::GetSceneRenderProperties() const
+CGameSceneRender* CClient::GetSceneRenderProperties() const
 {
 	return ASceneRender;
 }
 
-void CGameClient::SetAttributWindow(SDL_Window * Window)
+void CClient::SetAttributWindow(SDL_Window * Window)
 {
 	this->AWindow = Window;
 	return;
 }
 
 
-CGameClient::~CGameClient()
+CClient::~CClient()
 {
 	delete AEngine;
 	delete ASceneRender;
