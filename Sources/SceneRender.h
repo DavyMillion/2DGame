@@ -2,22 +2,27 @@
 #include <iostream>
 #include <string>
 
+class CActor;
+class CPlayerController;
+
 class CGameSceneRender
 {
 public:
 	CGameSceneRender();
 	~CGameSceneRender();
 
+	bool ActorRender(CActor*);
 	SDL_Texture* LoadTexture(const std::string);
 	void UpdateRendu();
 
 	// Getters & Setters
 	SDL_Renderer* GetRenderer() const;
 	SDL_Rect* GetCameraTarget() const;
+	CPlayerController* GetPlayerController() const;
 
 	void SetAttributRenderer(SDL_Renderer*);
-	bool SetTexturePlayer(std::string);
-	void SetIncrementPosX(int);
+	bool SetTextureToActor(CActor* Actor, std::string);
+
 	void SetIncrementPosY(int);
 
 	void SetIncrementAngle(int);
@@ -25,9 +30,7 @@ public:
 private:
 	SDL_Renderer* ARenderer;
 	SDL_Rect* ACameraTarget;
-	SDL_Texture* AssetPlayer;
-	SDL_Point PlayerCenter;
-	double angle;
+	CPlayerController* AMainPlayer;
 };
 
 // Cette classe va gérer la logique du rendu de la scène 2D

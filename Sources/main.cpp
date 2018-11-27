@@ -3,6 +3,7 @@
 #include "Client.h"
 #include "Server.h"
 #include "SceneRender.h"
+#include "PlayerController.h"
 #include "Constantes.h"
 
 int main(int argc, char* args[])
@@ -15,7 +16,7 @@ int main(int argc, char* args[])
 	if (!Client->InitialisationSDL()) { return EXIT_ERROR; }
 
 	// Chargement des textures
-	if (!SceneRender->SetTexturePlayer("./assets/textures/player.png")) { return EXIT_ERROR; }
+	if (!SceneRender->SetTextureToActor(SceneRender->GetPlayerController(), "./assets/textures/player.png")) { return EXIT_ERROR; }
 
 	// Contrôle de la framerate délégué à l'objet GameEngine
 	GameEngine->SetFramerate(GameEngine->CalculRatioFramerate(FRAME_PER_SECOND));

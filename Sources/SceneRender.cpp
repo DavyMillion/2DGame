@@ -1,16 +1,25 @@
+#include "PlayerController.h"
 #include "SceneRender.h"
+
 
 CGameSceneRender::CGameSceneRender()
 {
+	AMainPlayer = new CPlayerController;
 	ACameraTarget = new SDL_Rect;
-	// Initialisation du "joueur"
-	ACameraTarget->x = 20;
-	ACameraTarget->y = 20;
-	ACameraTarget->w = 48;
-	ACameraTarget->h = 70;
+}
 
-	PlayerCenter.x = ACameraTarget->w / 2;
-	PlayerCenter.y = ACameraTarget->h / 2;
+bool CGameSceneRender::ActorRender(CActor* Actor)
+{
+	SDL_RenderCopyEx(
+		ARenderer,
+		Actor->GetActorTexture(),
+		NULL,
+		Actor->GetActorTextureContainer(),
+		Actor->GetActorRelativeAngle(),
+		Actor->GetActorPosition(),
+		SDL_FLIP_NONE
+	);
+	return true;
 }
 
 SDL_Texture* CGameSceneRender::LoadTexture(const std::string path)
@@ -35,24 +44,14 @@ void CGameSceneRender::UpdateRendu()
 	// Change color of the "drawing tool" to white
 	SDL_SetRenderDrawColor(ARenderer, 0, 0, 20, 255);
 
+	ActorRender(AMainPlayer);
+	/*
 	// Render our "player"
 	SDL_RenderFillRect(ARenderer, ACameraTarget);
 	// -> CCameraTarget corresponds à la cible du rendu
 	// |-> c'est cette cible qu'on fera varier en temps réel pour le scrolling
 	// |-> elle se devra d'être centré sur le joueur
-
-	// Change color of the "drawing tool" to blue foncé
-	SDL_SetRenderDrawColor(ARenderer, 0, 0, 20, 255);
-
-	SDL_RenderCopyEx(
-		ARenderer,
-		AssetPlayer,
-		NULL,
-		ACameraTarget,
-		angle,
-		&PlayerCenter,
-		SDL_FLIP_NONE
-	);
+	*/
 
 	// Render the changes above
 	SDL_RenderPresent(ARenderer);
@@ -64,33 +63,34 @@ SDL_Renderer * CGameSceneRender::GetRenderer() const { return ARenderer; }
 
 SDL_Rect * CGameSceneRender::GetCameraTarget() const { return ACameraTarget; }
 
+CPlayerController * CGameSceneRender::GetPlayerController() const
+{
+	return AMainPlayer;
+}
+
 void CGameSceneRender::SetAttributRenderer(SDL_Renderer * Renderer)
 {
 	this->ARenderer = Renderer;
 	return;
 }
 
-bool CGameSceneRender::SetTexturePlayer(std::string path)
+bool CGameSceneRender::SetTextureToActor(CActor * Actor, std::string path)
 {
-	AssetPlayer = LoadTexture(path);
-	if (!AssetPlayer)
+	Actor->SetActorTexture(LoadTexture(path));
+	if (!Actor->GetActorTexture())
 		return false;
 	return true;
 }
 
-void CGameSceneRender::SetIncrementPosX(int Increment)
-{
-	ACameraTarget->x += Increment;
-}
-
 void CGameSceneRender::SetIncrementPosY(int Increment)
 {
-	ACameraTarget->y += Increment;
+	AMainPlayer->SetActorPositionX(AMainPlayer->GetActorPosition()->x + Increment);
+	AMainPlayer->SetActorPositionY(AMainPlayer->GetActorPosition()->y + Increment);
 }
 
 void CGameSceneRender::SetIncrementAngle(int p_angle)
 {
-	angle += p_angle;
+	AMainPlayer->SetActorRotation(p_angle);
 }
 
 CGameSceneRender::~CGameSceneRender()
