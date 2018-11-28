@@ -1,2 +1,6 @@
-﻿  Actor.cpp
+﻿  SceneRender.cpp
+c:\users\davy\source\repos\2dgame\2dgame\sources\scenerender.cpp(93): warning C4244: 'initialisation' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\scenerender.cpp(94): warning C4244: 'initialisation' : conversion de 'double' en 'int', perte possible de données
+  main.cpp
+  Génération de code en cours...
   2DGame.vcxproj -> C:\Users\Davy\source\repos\2DGame\x64\Debug\2DGame.exe

@@ -1,5 +1,6 @@
 #include "SDL_headers.h"
 #include <iostream>
+#include <math.h>
 #include <string>
 
 class CActor;
@@ -23,14 +24,14 @@ public:
 	void SetAttributRenderer(SDL_Renderer*);
 	bool SetTextureToActor(CActor* Actor, std::string);
 
-	void SetIncrementPosY(int);
+	void MoveForwardActor(int);
 
 	void SetIncrementAngle(int);
 
 private:
 	SDL_Renderer* ARenderer;
 	SDL_Rect* ACameraTarget;
-	CPlayerController* AMainPlayer;
+	CPlayerController* APlayerControlled;
 };
 
 // Cette classe va gérer la logique du rendu de la scène 2D

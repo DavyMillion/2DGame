@@ -2,7 +2,7 @@
 
 CActor::CActor()
 {
-	APosition = new SDL_Point;
+	APositionCenter = new SDL_Point;
 	ATextureContainer = new SDL_Rect;
 	// Initialisation du "joueur"
 	ATextureContainer->x = 20;
@@ -10,13 +10,13 @@ CActor::CActor()
 	ATextureContainer->w = 48;
 	ATextureContainer->h = 70;
 
-	APosition->x = ATextureContainer->w / 2;
-	APosition->y = ATextureContainer->h / 2;
+	APositionCenter->x = ATextureContainer->w / 2;
+	APositionCenter->y = ATextureContainer->h / 2;
 }
 
 SDL_Point * CActor::GetActorPosition()
 {
-	return APosition;
+	return APositionCenter;
 }
 
 SDL_Texture * CActor::GetActorTexture()
@@ -36,14 +36,12 @@ double CActor::GetActorRelativeAngle()
 
 void CActor::SetActorPositionX(int CoordX)
 {
-	ATextureContainer->x = CoordX;
-	//APosition->x = CoordX;
+	this->ATextureContainer->x = CoordX;
 }
 
 void CActor::SetActorPositionY(int CoordY)
 {
-	ATextureContainer->y = CoordY;
-	//APosition->y = CoordY;
+	this->ATextureContainer->y = CoordY;
 }
 
 void CActor::SetActorTexture(SDL_Texture* Texture)
@@ -64,7 +62,7 @@ void CActor::SetActorRotation(int Incrementation) // système à modifier
 CActor::~CActor()
 {
 	/*
-	delete APosition;
+	delete APositionCenter;
 	delete ATexture;
 	delete ATextureContainer;
 	*/

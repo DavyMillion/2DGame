@@ -25,8 +25,8 @@ public:
 
 private:
 	SDL_Texture* ATexture = nullptr;
-	SDL_Point* APosition; // position dans la grille 2D du centre de gravité de l'actor
-	SDL_Rect* ATextureContainer;
+	SDL_Point* APositionCenter; // position dans la grille ATextureContainer du centre de gravité de l'actor
+	SDL_Rect* ATextureContainer; // rectangle englobant l'acteur dans la grille 2D
 	double ARelativeAngle; // angle relatif à la normale (y), theta croissant -> sens des aiguilles d'une montre
 };
 

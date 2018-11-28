@@ -5,7 +5,7 @@ clock_t CGameEngine::DeltaTime(clock_t TimeAtLastFrame)
 	clock_t TimeAtThisFrame = clock();
 	clock_t CalculationTime = (TimeAtThisFrame - TimeAtLastFrame);
 	if (PERFORMANCE_LOG)
-	printf("PerformanceLog :: Calculation time of the current frame -> %ld ms\n", CalculationTime);
+	printf("Calculation time : %ld ms\n", CalculationTime);
 	return CalculationTime;
 }
 

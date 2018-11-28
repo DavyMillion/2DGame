@@ -44,12 +44,11 @@ int main(int argc, char* args[])
 				case SDLK_LEFT:
 					SceneRender->SetIncrementAngle(-10);
 					break;
-					// Remeber 0,0 in SDL is left-top. So when the user pressus down, the y need to increase
 				case SDLK_DOWN:
-					SceneRender->SetIncrementPosY(10);
+					SceneRender->MoveForwardActor(-10);
 					break;
 				case SDLK_UP:
-					SceneRender->SetIncrementPosY(-10);
+					SceneRender->MoveForwardActor(10);
 					break;
 				default:
 					break;
