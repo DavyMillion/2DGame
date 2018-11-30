@@ -1,10 +1,11 @@
 #include "PlayerController.h"
 #include "SceneRender.h"
 
-CGameSceneRender::CGameSceneRender()
+CGameSceneRender::CGameSceneRender(CGameEngine* Engine)
 {
-	APlayerControlled = new CPlayerController;
+	OurPlayer = new CPlayerController;
 	ACameraTarget = new SDL_Rect;
+	AEngine = Engine;
 }
 
 bool CGameSceneRender::ActorRender(CActor* Actor)
@@ -15,7 +16,7 @@ bool CGameSceneRender::ActorRender(CActor* Actor)
 		NULL,
 		Actor->GetActorTextureContainer(),
 		Actor->GetActorRelativeAngle(),
-		Actor->GetActorPosition(),
+		Actor->GetActorCenterPositionInTextureContainerGrid(),
 		SDL_FLIP_NONE
 	);
 	return true;
@@ -42,7 +43,7 @@ void CGameSceneRender::UpdateRendu()
 
 	// à terme, un container contiendra toute les entités "visibles" du joueurs
 	// et on affichera toutes ces entités avec un for
-	ActorRender(APlayerControlled);
+	ActorRender(OurPlayer);
 	/*
 	// Render our "player"
 	SDL_RenderFillRect(ARenderer, ACameraTarget);
@@ -63,7 +64,7 @@ SDL_Rect * CGameSceneRender::GetCameraTarget() const { return ACameraTarget; }
 
 CPlayerController * CGameSceneRender::GetPlayerController() const
 {
-	return APlayerControlled;
+	return OurPlayer;
 }
 
 void CGameSceneRender::SetAttributRenderer(SDL_Renderer * Renderer)
@@ -80,26 +81,21 @@ bool CGameSceneRender::SetTextureToActor(CActor * Actor, std::string path)
 	return true;
 }
 
-void CGameSceneRender::MoveForwardActor(int Increment) // à modifier
+void CGameSceneRender::MoveActorForward(int Increment) // à modifier
 {
-	int R = Increment;
-	int xA = APlayerControlled->GetActorTextureContainer()->x;
-	int yA = APlayerControlled->GetActorTextureContainer()->y;
-
-	double theta = APlayerControlled->GetActorRelativeAngle();
-	std::cout << "Angle deg : " << theta << std::endl;
+	double theta = OurPlayer->GetActorRelativeAngle();
 	theta = (theta * M_PI) / 180; // passage en radians
-	std::cout << "Angle rad : " << theta << std::endl;
-	int yB = (int) yA + Increment * (-1) * cos(theta);
-	int xB = (int) xA + Increment * sin(theta);
 
-	APlayerControlled->SetActorPositionX(xB);
-	APlayerControlled->SetActorPositionY(yB);
+	int xB = static_cast<int>( OurPlayer->GetActorAbsolutePosition()->x + Increment * sin(theta) );
+	int yB = static_cast<int>( OurPlayer->GetActorAbsolutePosition()->y + Increment * (-1) * cos(theta) );
+	
+	OurPlayer->SetActorPositionX(xB);
+	OurPlayer->SetActorPositionY(yB);
 }
 
 void CGameSceneRender::SetIncrementAngle(int p_angle)
 {
-	APlayerControlled->SetActorRotation(p_angle);
+	OurPlayer->SetActorRotation(p_angle);
 }
 
 CGameSceneRender::~CGameSceneRender()

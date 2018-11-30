@@ -13,18 +13,18 @@ public:
 	void ConfigurationRenderer(SDL_Renderer* Renderer);
 
 	// Fonctions spécifique au contrôle de la Framerate par le moteur de rendu
-	clock_t DeltaTime(clock_t TimeAtLastFrame);
-	void SetDelay(clock_t CalculationTime, clock_t FramerateDelay);
-	clock_t CalculRatioFramerate(int FramePerSecondWanted);
-	
-	// Getters & Setters
-	void SetFramerate(clock_t Ratio);
-	void SetTimeAtThisFrame(clock_t Time);
 	clock_t GetRatioFramerate() const;
 	clock_t GetTimeAtCurrentFrame() const;
+	clock_t GetCalculationTime(clock_t TimeAtLastFrame);
+	clock_t CalculRatioFramerate(int FramePerSecondWanted);
+	void SetDeltaTime(clock_t);
+	void SetDelay(clock_t CalculationTime, clock_t FramerateDelay);
+	void SetFramerate(clock_t Ratio);
+	void SetTimeAtThisFrame(clock_t Time);
 
 private:
 	long int AFrameID;
 	clock_t ARatioFramerate;
 	clock_t ATimeAtCurrentFrame;
+	clock_t ADeltaTime;
 };

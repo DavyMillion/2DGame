@@ -13,6 +13,7 @@ int main(int argc, char* args[])
 	CGameEngine* GameEngine = Client->GetGameEngineProperties();
 	CGameSceneRender* SceneRender = Client->GetSceneRenderProperties();
 
+
 	if (!Client->InitialisationSDL()) { return EXIT_ERROR; }
 
 	// Chargement des textures
@@ -45,10 +46,10 @@ int main(int argc, char* args[])
 					SceneRender->SetIncrementAngle(-10);
 					break;
 				case SDLK_DOWN:
-					SceneRender->MoveForwardActor(-10);
+					SceneRender->MoveActorForward(-10);
 					break;
 				case SDLK_UP:
-					SceneRender->MoveForwardActor(10);
+					SceneRender->MoveActorForward(10);
 					break;
 				default:
 					break;
@@ -66,10 +67,10 @@ int main(int argc, char* args[])
 		{
 			// on ajuste ici le delay entre le calcul de cette frame et la suivante
 			Client->GetGameEngineProperties()->SetDelay(
-				GameEngine->DeltaTime(GameEngine->GetTimeAtCurrentFrame()), 
+				GameEngine->GetCalculationTime(GameEngine->GetTimeAtCurrentFrame()), 
 				GameEngine->GetRatioFramerate()
 			);
-			
+
 			GameEngine->SetTimeAtThisFrame(clock());
 		}
 	}

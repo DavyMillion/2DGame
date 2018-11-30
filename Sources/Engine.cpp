@@ -1,6 +1,6 @@
 #include "Engine.h"
 
-clock_t CGameEngine::DeltaTime(clock_t TimeAtLastFrame)
+clock_t CGameEngine::GetCalculationTime(clock_t TimeAtLastFrame)
 {
 	clock_t TimeAtThisFrame = clock();
 	clock_t CalculationTime = (TimeAtThisFrame - TimeAtLastFrame);
@@ -24,7 +24,15 @@ void CGameEngine::SetDelay(clock_t CalculationTime, clock_t FramerateDelay)
 
 clock_t CGameEngine::CalculRatioFramerate(int framerate)
 {
-	return ((clock_t) 1000 / framerate);
+	clock_t DeltaTime = 1000 / framerate;
+	SetDeltaTime(DeltaTime);
+	return (DeltaTime);
+}
+
+void CGameEngine::SetDeltaTime(clock_t DeltaTime)
+{
+	ADeltaTime = DeltaTime;
+	return;
 }
 
 void CGameEngine::SetFramerate(clock_t Ratio)

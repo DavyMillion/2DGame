@@ -7,7 +7,7 @@ CClient::CClient()
 	std::cout << "Création de l'instance du Client" << std::endl;
 
 	AEngine = new CGameEngine;
-	ASceneRender = new CGameSceneRender;
+	ASceneRender = new CGameSceneRender(AEngine);
 }
 
 bool CClient::InitialisationSDL()

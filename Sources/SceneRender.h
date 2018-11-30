@@ -5,11 +5,12 @@
 
 class CActor;
 class CPlayerController;
+class CGameEngine;
 
 class CGameSceneRender
 {
 public:
-	CGameSceneRender();
+	CGameSceneRender(CGameEngine* Engine);
 	~CGameSceneRender();
 
 	bool ActorRender(CActor*);
@@ -24,14 +25,15 @@ public:
 	void SetAttributRenderer(SDL_Renderer*);
 	bool SetTextureToActor(CActor* Actor, std::string);
 
-	void MoveForwardActor(int);
+	void MoveActorForward(int);
 
 	void SetIncrementAngle(int);
 
 private:
 	SDL_Renderer* ARenderer;
 	SDL_Rect* ACameraTarget;
-	CPlayerController* APlayerControlled;
+	CPlayerController* OurPlayer;
+	CGameEngine* AEngine;
 };
 
 // Cette classe va gérer la logique du rendu de la scène 2D
