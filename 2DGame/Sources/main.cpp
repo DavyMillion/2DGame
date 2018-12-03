@@ -1,0 +1,125 @@
+#include "SDL_headers.h"
+#include "Engine.h"
+#include "Client.h"
+#include "Server.h"
+#include "SceneRender.h"
+#include "PlayerController.h"
+#include "Constantes.h"
+
+int main(int argc, char** argv)
+{
+	// l'instance du client
+	CClient* Client = new CClient;
+	CGameEngine* GameEngine = Client->GetGameEngineProperties();
+	CGameSceneRender* SceneRender = Client->GetSceneRenderProperties();
+
+	if (!Client->InitialisationSDL()) { return EXIT_ERROR; }
+
+	// Chargement des textures, cette condition sera délégué dans une fonction qui retournera un bouléen
+	if (!SceneRender->SetTextureToActor(SceneRender->GetPlayerController(), "./assets/textures/player.png")) { return EXIT_ERROR; }
+	// on saisira dans cette fonction les containers à partir des dimensions de la texture
+
+	SceneRender->GetPlayerController()->SpawnPlayer(Client->GetWindow());
+
+	// Contrôle de la framerate délégué à l'objet GameEngine
+	GameEngine->SetFramerate(GameEngine->CalculRatioFramerate(FRAME_PER_SECOND));
+	GameEngine->SetTimeAtThisFrame(clock());
+
+	int bLoop = true;
+
+	// boucle principale du jeu
+	while (bLoop)
+	{
+		SDL_Event event;
+
+		// boucle de traitement des inputs
+		while (SDL_PollEvent(&event)) // tant qu'il y a des évènements dans la liste
+		{
+			if (event.type == SDL_QUIT)
+				bLoop = false;
+			else if (event.type == SDL_KEYDOWN)
+			{
+				switch (event.key.keysym.sym)
+				{
+				case SDLK_RIGHT:
+					SceneRender->SetIncrementAngle(10);
+					break;
+				case SDLK_LEFT:
+					SceneRender->SetIncrementAngle(-10);
+					break;
+				case SDLK_DOWN:
+					SceneRender->MoveActorForward(-10);
+					break;
+				case SDLK_UP:
+					SceneRender->MoveActorForward(10);
+					break;
+				default:
+					break;
+				}
+			}
+		}
+
+		// (1)
+
+		SceneRender->UpdateRendu();
+		std::cout << "ifou x : " << SceneRender->GetPlayerController()->GetActorAbsolutePosition()->x << std::endl;
+		std::cout << "ifou y : " << SceneRender->GetPlayerController()->GetActorAbsolutePosition()->y << std::endl;
+
+		std::cout << "ifou rect x : " << SceneRender->GetPlayerController()->GetActorTextureContainer()->x << std::endl;
+		std::cout << "ifou rect y : " << SceneRender->GetPlayerController()->GetActorTextureContainer()->y << std::endl;
+		// (2)
+
+		if (event.type != SDL_QUIT)
+		{
+			// on ajuste ici le delay entre le calcul de cette frame et la suivante
+			Client->GetGameEngineProperties()->SetDelay(
+				GameEngine->GetCalculationTime(GameEngine->GetTimeAtCurrentFrame()), 
+				GameEngine->GetRatioFramerate()
+			);
+
+			GameEngine->SetTimeAtThisFrame(clock());
+		}
+	}
+	delete Client;
+	return EXIT_SUCCESS;
+}
+
+
+// (1)
+// SniffWhatNetworkTellMe()
+// réception des valeurs réseau : thread de réception charge les données dans une structure temp et
+// c'est cette structure temp qui sera évalué ici.
+// On évite de cette manière un éventuel problème d'accès aux valeurs des variables en écriture
+// par un autre thread concurrent.
+
+// (2)
+// établir un tracking système de la position --> GameEngine (?)
+/*
+	std::cout << "Position X : " << CameraCalibration.x << std::endl;
+	std::cout << "Position Y : " << CameraCalibration.y << std::endl;
+	std::cout << "Position W : " << CameraCalibration.w << std::endl;
+	std::cout << "Position H : " << CameraCalibration.h << std::endl;
+*/
+
+// ARCHITECTURE
+// Classe Client (contient une instance de PlayerController et une instance de Engine)
+
+// Classe GameEngine (contient toute les fonctions de traitement de l'image... ainsi que des fonctions de log)
+// encapsulera tout le code du contrôle de la framerate
+// Log full system avec Frame ID et tout
+
+
+/* 
+A FAIRE
+
+créer des méthodes simples pour qu'à partir d'une position au milieu de (0, 0) (actor)
+ calculer la position x, y du container (en inversant ducoup)
+ ET DONC ARRIVER A FAIRE SPAWN LE PERSO AU MILIEU EN LUI PASSANT JUSTE LES COORDONNEES (0,0) !!!!
+
+ Mettre en place tout le système pour le scrolling context
+
+ REFACTORISATION DU CODE
+
+ Code réseau...
+
+*/
