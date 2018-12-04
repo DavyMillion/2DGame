@@ -3,8 +3,8 @@
 CActor::CActor()
 {
 	AAbsolutePosition = new SDL_Point;
-	ACenterPositionTextureContainerGrid = new SDL_Point;
 	ATextureContainer = new SDL_Rect;
+	ACenterPositionInContainerGrid = new SDL_Point;
 }
 
 void CActor::CalculateAbsoluteActorCenter(SDL_Point* Point)
@@ -12,30 +12,9 @@ void CActor::CalculateAbsoluteActorCenter(SDL_Point* Point)
 	// Coordonnées du point A (sommet haut gauche du container)
 	int xA = GetActorTextureContainer()->x;
 	int yA = GetActorTextureContainer()->y;
-
-	int HalfLengthRectX = GetActorCenterPositionInContainerGrid()->x;
-	int HalfLengthRectY = GetActorCenterPositionInContainerGrid()->y;
-
-	double theta = GetActorRelativeAngle();
-	theta = (theta * M_PI) / 180; // passage en radians
 	
-	/*
-	double phi = 1 / tan((HalfLengthRectY / HalfLengthRectX));
-	double theta = GetActorRelativeAngle();
-	theta = (theta * M_PI) / 180; // passage en radians
-
-	// Coordonnées du vecteur de A vers T, point d'intersection des diagonales
-	double xM = ( sin(phi) * sin(theta) - cos(phi) * cos(theta) );
-	double yM = ( sin(phi) * cos(theta) + cos(phi) * sin(theta) );
-	
-	double NormeVector = sqrt(HalfLengthRectX * HalfLengthRectX + HalfLengthRectY * HalfLengthRectY);
-
-	Point->x = static_cast<int> (xA + xM * NormeVector);
-	Point->y = static_cast<int> (yA + yM * NormeVector);
-	*/
-	/*
-	Point->x = static_cast<int> ( xA + (-1 * HalfLengthRectX * cos(theta) + (- 1) * HalfLengthRectY * sin(theta)) );
-	Point->y = static_cast<int> ( yA + (HalfLengthRectX * sin(theta) - HalfLengthRectY * cos(theta)) );*/
+	int HalfLengthRectX = ATextureContainer->w / 2;
+	int HalfLengthRectY = ATextureContainer->h / 2;
 
 	Point->x = xA + HalfLengthRectX;
 	Point->y = yA + HalfLengthRectY;
@@ -48,14 +27,14 @@ SDL_Point * CActor::GetActorAbsolutePosition()
 	return AAbsolutePosition;
 }
 
-SDL_Point * CActor::GetActorCenterPositionInContainerGrid()
-{
-	return ACenterPositionTextureContainerGrid;
-}
-
 SDL_Texture * CActor::GetActorTexture()
 {
 	return ATexture;
+}
+
+SDL_Point * CActor::GetActorCenterPositionInContainerGrid()
+{
+	return ACenterPositionInContainerGrid;
 }
 
 SDL_Rect* CActor::GetActorTextureContainer()
@@ -71,12 +50,12 @@ double CActor::GetActorRelativeAngle()
 
 void CActor::SetActorPositionX(int CoordX)
 {
-	this->ATextureContainer->x = CoordX - GetActorCenterPositionInContainerGrid()->x;
+	this->ATextureContainer->x = CoordX - ATextureContainer->w / 2;
 }
 
 void CActor::SetActorPositionY(int CoordY)
 {
-	this->ATextureContainer->y = CoordY - GetActorCenterPositionInContainerGrid()->y;
+	this->ATextureContainer->y = CoordY - ATextureContainer->h / 2;
 }
 
 void CActor::SetActorTexture(SDL_Texture* Texture)

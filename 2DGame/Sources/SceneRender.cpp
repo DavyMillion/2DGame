@@ -40,11 +40,11 @@ void CGameSceneRender::UpdateRendu()
 	SDL_RenderClear(ARenderer);
 
 	// Change color of the "drawing tool" to white
-	SDL_SetRenderDrawColor(ARenderer, 255, 255, 255, 255);
+	SDL_SetRenderDrawColor(ARenderer, 255, 0, 0, 0);
 
 	// à terme, un container (vector ou map) contiendra toute les entités "visibles" du joueurs
 	// et on affichera toutes ces entités avec un for
-	SDL_RenderFillRect(ARenderer, GetPlayerController()->GetActorTextureContainer());
+	SDL_RenderFillRect(ARenderer, GetPlayerController()->GetActorTextureContainer()); // Affichage du container
 	ActorRender(OurPlayer);
 	/*
 	// Render our "player"

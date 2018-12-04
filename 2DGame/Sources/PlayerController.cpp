@@ -10,9 +10,9 @@ CPlayerController::CPlayerController()
 	ATextureContainer->w = 48;
 	ATextureContainer->h = 70;
 
-	// Initialisation de ACenterPositionTextureContainerGrid
-	ACenterPositionTextureContainerGrid->x = ATextureContainer->w / 2;
-	ACenterPositionTextureContainerGrid->y = ATextureContainer->h / 2;
+	ACenterPositionInContainerGrid->x = ATextureContainer->w / 2;
+	ACenterPositionInContainerGrid->y = ATextureContainer->h / 2;
+
 }
 
 void CPlayerController::SpawnPlayer(SDL_Window * Window)

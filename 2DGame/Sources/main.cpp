@@ -19,7 +19,7 @@ int main(int argc, char** argv)
 	if (!SceneRender->SetTextureToActor(SceneRender->GetPlayerController(), "./assets/textures/player.png")) { return EXIT_ERROR; }
 	// on saisira dans cette fonction les containers à partir des dimensions de la texture
 
-	SceneRender->GetPlayerController()->SpawnPlayer(Client->GetWindow());
+	SceneRender->GetPlayerController()->SpawnPlayer(Client->GetWindow()); // à modifier
 
 	// Contrôle de la framerate délégué à l'objet GameEngine
 	GameEngine->SetFramerate(GameEngine->CalculRatioFramerate(FRAME_PER_SECOND));
@@ -117,6 +117,7 @@ créer des méthodes simples pour qu'à partir d'une position au milieu de (0, 0) (
  ET DONC ARRIVER A FAIRE SPAWN LE PERSO AU MILIEU EN LUI PASSANT JUSTE LES COORDONNEES (0,0) !!!!
 
  Mettre en place tout le système pour le scrolling context
+ Iteration n°2 des inputs events
 
  REFACTORISATION DU CODE
 

@@ -9,12 +9,13 @@ class CActor
 public:
 	CActor();
 
+	// Re-calcule à chaque appel la position absolue du centre de l'actor
+	SDL_Point* GetActorAbsolutePosition();
 	void CalculateAbsoluteActorCenter(SDL_Point*);
 
-	SDL_Point* GetActorAbsolutePosition();
-	// Re-calcule à chaque appel la position absolue du centre de l'acteur
-	SDL_Point* GetActorCenterPositionInContainerGrid(); // retourne la position du centre dans la grille du texture container
+	// Retourne la texture de l'Actor
 	SDL_Texture* GetActorTexture();
+	SDL_Point* GetActorCenterPositionInContainerGrid();
 	SDL_Rect* GetActorTextureContainer();
 	
 	// retourne l'angle d'inclinaison relatif de l'actor en degrée
@@ -33,8 +34,9 @@ protected:
 	SDL_Point* AAbsolutePosition = nullptr;
 	// Position absolu dans la grille 2D
 	// Les champs x et y indiquent la position du centre de gravité de l'actor
-	SDL_Point* ACenterPositionTextureContainerGrid = nullptr;
-	// Position dans la grille ATextureContainer du centre de gravité de l'actor
+
+	SDL_Point* ACenterPositionInContainerGrid = nullptr;
+
 	SDL_Rect* ATextureContainer = nullptr;
 	/* Rectangle englobant la texture de l'acteur dans la grille 2D
 	Descriptif des champs de cette structure :
@@ -42,8 +44,9 @@ protected:
 	-> y : coordonnée en y du coin haut gauche du Container (rectangulaire)
 	-> h : hauteur du rectangle
 	-> w : largeur du rectangle
+	Le container est fixe par rapport à theta
 	*/
-	double ARelativeAngle; 
+	double ARelativeAngle = 0.f;
 	// Angle relatif à la normale (y), theta croissant -> sens des aiguilles d'une montre
 };
 
