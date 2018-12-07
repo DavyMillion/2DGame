@@ -16,10 +16,10 @@ int main(int argc, char** argv)
 	if (!Client->InitialisationSDL()) { return EXIT_ERROR; }
 
 	// Chargement des textures, cette condition sera délégué dans une fonction qui retournera un bouléen
-	if (!SceneRender->SetTextureToActor(SceneRender->GetPlayerController(), "./assets/textures/player.png")) { return EXIT_ERROR; }
+	if (!SceneRender->LoadAllActorTextures(SceneRender->GetRenderer())) { return EXIT_ERROR; }
 	// on saisira dans cette fonction les containers à partir des dimensions de la texture
 
-	SceneRender->GetPlayerController()->SpawnPlayer(Client->GetWindow()); // à modifier
+	SceneRender->GetPlayerController()->SetSpawnPositionPlayer(Client->GetWindow()); // à modifier
 
 	// Contrôle de la framerate délégué à l'objet GameEngine
 	GameEngine->SetFramerate(GameEngine->CalculRatioFramerate(FRAME_PER_SECOND));
@@ -123,4 +123,5 @@ créer des méthodes simples pour qu'à partir d'une position au milieu de (0, 0) (
 
  Code réseau...
 
+ AJOUT DU CODE POUR QUITTER LES SUBSYTEMS SDL
 */

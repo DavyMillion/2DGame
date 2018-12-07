@@ -1,10 +1,13 @@
 #include "Actor.h"
+#include "Texture.h"
 
 CActor::CActor()
 {
 	AAbsolutePosition = new SDL_Point;
 	ATextureContainer = new SDL_Rect;
 	ACenterPositionInContainerGrid = new SDL_Point;
+	ATextureObject = new CSubTexture();
+	ARelativeAngle = 0.f;
 }
 
 void CActor::CalculateAbsoluteActorCenter(SDL_Point* Point)
@@ -27,9 +30,9 @@ SDL_Point * CActor::GetActorAbsolutePosition()
 	return AAbsolutePosition;
 }
 
-SDL_Texture * CActor::GetActorTexture()
+CSubTexture * CActor::GetActorTextureObject()
 {
-	return ATexture;
+	return ATextureObject;
 }
 
 SDL_Point * CActor::GetActorCenterPositionInContainerGrid()
@@ -48,19 +51,15 @@ double CActor::GetActorRelativeAngle()
 	return ARelativeAngle;
 }
 
-void CActor::SetActorPositionX(int CoordX)
+void CActor::SetActorPosition(int CoordX, int CoordY)
 {
 	this->ATextureContainer->x = CoordX - ATextureContainer->w / 2;
-}
-
-void CActor::SetActorPositionY(int CoordY)
-{
 	this->ATextureContainer->y = CoordY - ATextureContainer->h / 2;
 }
 
-void CActor::SetActorTexture(SDL_Texture* Texture)
+void CActor::SetActorTexture(SDL_Renderer* Renderer, std::string path)
 {
-	this->ATexture = Texture;
+	this->ATextureObject->LoadTextureFromFile(Renderer, path);
 }
 
 void CActor::SetActorTextureContainer(SDL_Rect* TextureContainer)

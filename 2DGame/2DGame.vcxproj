@@ -138,6 +138,7 @@
     <ClCompile Include="Sources\PlayerController.cpp" />
     <ClCompile Include="Sources\SceneRender.cpp" />
     <ClCompile Include="Sources\Server.cpp" />
+    <ClCompile Include="Sources\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
@@ -148,6 +149,7 @@
     <ClInclude Include="Sources\SceneRender.h" />
     <ClInclude Include="Sources\SDL_headers.h" />
     <ClInclude Include="Sources\Server.h" />
+    <ClInclude Include="Sources\Texture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

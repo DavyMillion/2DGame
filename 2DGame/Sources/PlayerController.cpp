@@ -1,7 +1,7 @@
 #include "PlayerController.h"
 
 CPlayerController::CPlayerController()
-{
+{ 
 	Super::CActor();
 
 	// Initialisation du "joueur"
@@ -15,10 +15,9 @@ CPlayerController::CPlayerController()
 
 }
 
-void CPlayerController::SpawnPlayer(SDL_Window * Window)
+void CPlayerController::SetSpawnPositionPlayer(SDL_Window * Window)
 {
 	int LengthX, LengthY;
 	SDL_GetWindowSize(Window, &LengthX, &LengthY);
-	SetActorPositionX(LengthX / 2);
-	SetActorPositionY(LengthY / 2);
+	SetActorPosition(LengthX / 2, LengthY / 2);
 }

@@ -9,7 +9,7 @@ class CPlayerController : public CActor
 public:
 	CPlayerController();
 
-	void SpawnPlayer(SDL_Window * Window);
+	void SetSpawnPositionPlayer(SDL_Window * Window);
 
 private:
 	typedef CActor Super;
