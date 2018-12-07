@@ -4,10 +4,7 @@
 
 CClient::CClient()
 {
-	std::cout << "Création de l'instance du Client" << std::endl;
-
-	AEngine = new CGameEngine;
-	ASceneRender = new CGameSceneRender(AEngine, AWindow);
+	std::cout << "Client instance initialised" << std::endl;
 }
 
 bool CClient::InitialisationSDL()
@@ -19,13 +16,34 @@ bool CClient::InitialisationSDL()
 	if (!TempWindow) 
 		return false;
 
-	SDL_Renderer* TempRenderer = AEngine->CreationRenderer(TempWindow);
+	this->SetAttributWindow(TempWindow);
+	return true;
+}
+
+bool CClient::InitGameEngine()
+{
+	AEngine = new CGameEngine;
+	if (AEngine == nullptr)
+	{
+		return false;
+	}
+	return true;
+}
+
+bool CClient::InitSceneRendering()
+{
+	ASceneRender = new CGameSceneRender(AEngine, AWindow);
+	if (ASceneRender == nullptr)
+	{
+		return false;
+	}
+
+	SDL_Renderer* TempRenderer = AEngine->CreationRenderer(AWindow);
 	if (!TempRenderer)
 		return false;
 
-	this->SetAttributWindow(TempWindow);
 	this->ASceneRender->SetAttributRenderer(TempRenderer);
-	AEngine->ConfigurationRenderer(ASceneRender->GetRenderer());
+	AEngine->ConfigurationRenderer(ASceneRender->GetRenderer(), AWindow);
 	return true;
 }
 

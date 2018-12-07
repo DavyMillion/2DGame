@@ -14,6 +14,8 @@ public:
 	~CClient();
 
 	bool InitialisationSDL();
+	bool InitGameEngine();
+	bool InitSceneRendering();
 
 	// Getters (accesseurs)
 	CGameEngine* GetGameEngineProperties() const;

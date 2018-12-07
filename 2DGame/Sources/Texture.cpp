@@ -20,6 +20,8 @@ SDL_Texture* CSubTexture::LoadTextureFromFile(SDL_Renderer* Renderer, std::strin
 		std::cout << "Failed to load the following texture : " << path << "\n" << SDL_GetError() << std::endl;
 		return nullptr;
 	}
+	SDL_QueryTexture(ATexture, NULL, NULL, &ATextureWidth, &ATextureHeight);
+
 	return ATexture;
 }
 
@@ -28,9 +30,16 @@ void CSubTexture::FreeTexture()
 
 }
 
-void CSubTexture::RenderTexture(SDL_Renderer* Renderer, int x, int y, SDL_Rect* truc, double Angle, SDL_Point* CenterPosition, SDL_RendererFlip flip)
+void CSubTexture::RenderTexture(SDL_Renderer* Renderer, int x, int y, SDL_Rect* Container, double Angle, SDL_Point* CenterPosition, SDL_RendererFlip flip)
 {
-
+	SDL_Rect renderQuad = { x, y, GetWidthTexture(), GetHeightTexture() };
+	if (Container != nullptr)
+	{
+		renderQuad.w = Container->w;
+		renderQuad.h = Container->h;
+	};
+	
+	SDL_RenderCopyEx(Renderer, ATexture, Container, &renderQuad, Angle, CenterPosition, SDL_FLIP_NONE);
 }
 
 int CSubTexture::GetWidthTexture()

@@ -10,7 +10,7 @@ public:
 	bool InitSDL();
 	SDL_Window* CreationFenetre();
 	SDL_Renderer* CreationRenderer(SDL_Window* Window);
-	void ConfigurationRenderer(SDL_Renderer* Renderer);
+	void ConfigurationRenderer(SDL_Renderer* Renderer, SDL_Window* Window);
 
 	// Fonctions spécifique au contrôle de la Framerate par le moteur de rendu
 	clock_t GetRatioFramerate() const;

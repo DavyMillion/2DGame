@@ -15,9 +15,6 @@
 		// Désallocation de la mémoire
 		~CActor();
 
-		// Re-calcule à chaque appel la position absolue du centre de l'actor
-		void CalculateAbsoluteActorCenter(SDL_Point*);
-
 		// Retourne l'objet texture de l'Actor
 		CSubTexture* GetActorTextureObject();
 
@@ -43,6 +40,9 @@
 		void SetActorRotation(int);
 
 	protected:
+		// Re-calcule à chaque appel la position absolue du centre de l'actor
+		void CalculateAbsoluteActorCenter(SDL_Point*);
+
 		// Pointeur sur la texture de l'actor
 		CSubTexture* ATextureObject;
 

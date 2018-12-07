@@ -64,7 +64,7 @@ bool CGameEngine::InitSDL()
 
 SDL_Window* CGameEngine::CreationFenetre()
 {
-	SDL_Window* Window = SDL_CreateWindow("MyGame", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SIZE_X_FEN, SIZE_Y_FEN, 0);
+	SDL_Window* Window = SDL_CreateWindow("MyGame", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SIZE_X_FEN, SIZE_Y_FEN, SDL_WINDOW_SHOWN);
 
 	if (Window == nullptr)
 	{
@@ -75,7 +75,7 @@ SDL_Window* CGameEngine::CreationFenetre()
 
 SDL_Renderer* CGameEngine::CreationRenderer(SDL_Window* Window)
 {
-	SDL_Renderer* Renderer = SDL_CreateRenderer(Window, -1, 0);
+	SDL_Renderer* Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED);
 
 	if (Renderer == nullptr)
 	{
@@ -84,12 +84,14 @@ SDL_Renderer* CGameEngine::CreationRenderer(SDL_Window* Window)
 	return Renderer;
 }
 
-void CGameEngine::ConfigurationRenderer(SDL_Renderer* Renderer)
+void CGameEngine::ConfigurationRenderer(SDL_Renderer* Renderer, SDL_Window* Window)
 {
 	// Définis la taille du moteur de rendu comme étant la même que la fenêtre, à adapter avec SDL_GetWindowSize()
-	SDL_RenderSetLogicalSize(Renderer, SIZE_X_FEN, SIZE_Y_FEN);
+	int LengthX, LengthY;
+	SDL_GetWindowSize(Window, &LengthX, &LengthY);
+	SDL_RenderSetLogicalSize(Renderer, LengthX, LengthY);
 
-	// Set color of renderer to bleu foncé
+	// Définis la couleur du contexte de rendu comme étant bleu foncé
 	SDL_SetRenderDrawColor(Renderer, 0, 0, 20, 255);
 }
 

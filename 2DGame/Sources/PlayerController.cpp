@@ -12,12 +12,9 @@ CPlayerController::CPlayerController()
 
 	ACenterPositionInContainerGrid->x = ATextureContainer->w / 2;
 	ACenterPositionInContainerGrid->y = ATextureContainer->h / 2;
-
 }
 
-void CPlayerController::SetSpawnPositionPlayer(SDL_Window * Window)
+void CPlayerController::SetSpawnPositionPlayer(int x, int y)
 {
-	int LengthX, LengthY;
-	SDL_GetWindowSize(Window, &LengthX, &LengthY);
-	SetActorPosition(LengthX / 2, LengthY / 2);
+	SetActorPosition(x, y);
 }

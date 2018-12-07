@@ -8,18 +8,22 @@
 
 int main(int argc, char** argv)
 {
-	// l'instance du client
+	// L'instance du client
 	CClient* Client = new CClient;
+
+	// Initialisation générale de la SDL et de ses composants
+	if (!Client->InitGameEngine()) { return EXIT_ERROR; }
+	if (!Client->InitialisationSDL()) { return EXIT_ERROR; }
+	if (!Client->InitSceneRendering()) { return EXIT_ERROR; }
+
 	CGameEngine* GameEngine = Client->GetGameEngineProperties();
 	CGameSceneRender* SceneRender = Client->GetSceneRenderProperties();
 
-	if (!Client->InitialisationSDL()) { return EXIT_ERROR; }
-
 	// Chargement des textures, cette condition sera délégué dans une fonction qui retournera un bouléen
-	if (!SceneRender->LoadAllActorTextures(SceneRender->GetRenderer())) { return EXIT_ERROR; }
+	if (!SceneRender->LoadAllActorsTexture(SceneRender->GetRenderer())) { return EXIT_ERROR; }
 	// on saisira dans cette fonction les containers à partir des dimensions de la texture
 
-	SceneRender->GetPlayerController()->SetSpawnPositionPlayer(Client->GetWindow()); // à modifier
+	SceneRender->GetPlayerController()->SetSpawnPositionPlayer(LEVEL_WIDTH / 2, LEVEL_HEIGHT / 2); // à modifier
 
 	// Contrôle de la framerate délégué à l'objet GameEngine
 	GameEngine->SetFramerate(GameEngine->CalculRatioFramerate(FRAME_PER_SECOND));
@@ -60,13 +64,9 @@ int main(int argc, char** argv)
 		}
 
 		// (1)
-
+		
 		SceneRender->UpdateRendu();
-		std::cout << "ifou x : " << SceneRender->GetPlayerController()->GetActorAbsolutePosition()->x << std::endl;
-		std::cout << "ifou y : " << SceneRender->GetPlayerController()->GetActorAbsolutePosition()->y << std::endl;
-
-		std::cout << "ifou rect x : " << SceneRender->GetPlayerController()->GetActorTextureContainer()->x << std::endl;
-		std::cout << "ifou rect y : " << SceneRender->GetPlayerController()->GetActorTextureContainer()->y << std::endl;
+		
 		// (2)
 
 		if (event.type != SDL_QUIT)
