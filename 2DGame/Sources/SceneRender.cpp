@@ -7,7 +7,7 @@ void CGameSceneRender::TESTBACKGROUND()
 {
 	Background = new CSubTexture;
 	Background->LoadTextureFromFile(ARenderer, "./assets/textures/testBG.png");
-	if (!Background) std::cout << "ifou " << std::endl;
+	// ça va virer donc on s'en fout des sécurités
 }
 
 CGameSceneRender::CGameSceneRender(CGameEngine* Engine, SDL_Window* Window)
@@ -32,31 +32,30 @@ CGameSceneRender::CGameSceneRender(CGameEngine* Engine, SDL_Window* Window)
 
 bool CGameSceneRender::ActorRender(CActor* Actor)
 {
-	SDL_Rect RenderQuad = { OurPlayer->GetActorTextureContainer()->x - ACameraTarget->x,
-		OurPlayer->GetActorTextureContainer()->y - ACameraTarget->y,
-		OurPlayer->GetActorTextureContainer()->w,
-		OurPlayer->GetActorTextureContainer()->h };
+	// on s'assure que le rendu de l'actor ne se fera que dans une zone bien précise
+	SDL_Rect* RenderQuad = new SDL_Rect;
+	RenderQuad->x = OurPlayer->GetActorTextureContainer()->x - ACameraTarget->x;
+	RenderQuad->y = OurPlayer->GetActorTextureContainer()->y - ACameraTarget->y;
+	RenderQuad->w = OurPlayer->GetActorTextureContainer()->w;
+	RenderQuad->h = OurPlayer->GetActorTextureContainer()->h;
+
+	if (SEE_ACTOR_TEXTURE_CONTAINER)
+	{
+		SDL_SetRenderDrawColor(ARenderer, 0, 255, 0, 0);
+		SDL_RenderFillRect(ARenderer, RenderQuad);
+	}
 
 	SDL_RenderCopyEx(
 		ARenderer,
 		Actor->GetActorTextureObject()->GetSDLTexture(),
 		NULL,
-		&RenderQuad,
+		RenderQuad,
 		Actor->GetActorRelativeAngle(),
 		Actor->GetActorCenterPositionInContainerGrid(),
 		SDL_FLIP_NONE
 	);	
 
-	/*
-	SDL_RenderCopyEx(
-		ARenderer,
-		Actor->GetActorTextureObject()->GetSDLTexture(),
-		NULL,
-		Actor->GetActorTextureContainer(),
-		Actor->GetActorRelativeAngle(),
-		Actor->GetActorCenterPositionInContainerGrid(),
-		SDL_FLIP_NONE
-	);*/
+	delete RenderQuad;
 	return true;
 }
 
@@ -67,7 +66,7 @@ void CGameSceneRender::UpdateRendu()
 	SDL_RenderClear(ARenderer);
 
 	SDL_SetRenderDrawColor(ARenderer, 255, 255, 255, 255);
-	UpdateCameraTarget();
+	UpdateCameraTargetPosition();
 
 	Background->RenderTexture(ARenderer, 0, 0, ACameraTarget);
 
@@ -77,14 +76,15 @@ void CGameSceneRender::UpdateRendu()
 	// et on affichera toutes ces entités avec un for
 
 	ActorRender(OurPlayer);
-	
+
+
 	// Render the changes above
 	SDL_RenderPresent(ARenderer);
 
 	return;
 }
 
-void CGameSceneRender::UpdateCameraTarget()
+void CGameSceneRender::UpdateCameraTargetPosition()
 {
 	// Placement en x et y dans le cas général
 	ACameraTarget->x = OurPlayer->GetActorAbsolutePosition()->x - A_SCREEN_WIDTH / 2;

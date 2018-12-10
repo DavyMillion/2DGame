@@ -14,6 +14,7 @@ public:
 private:
 	typedef CActor Super;
 	// SDL_Window* AWindow = nullptr; // peut être stocké dans le constrcteur
+	
 };
 
 // Cette classe centralise le contrôle des entités du jeux (par les humains)

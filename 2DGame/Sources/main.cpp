@@ -16,10 +16,11 @@ int main(int argc, char** argv)
 	if (!Client->InitialisationSDL()) { return EXIT_ERROR; }
 	if (!Client->InitSceneRendering()) { return EXIT_ERROR; }
 
+	// Raccourcis développement
 	CGameEngine* GameEngine = Client->GetGameEngineProperties();
 	CGameSceneRender* SceneRender = Client->GetSceneRenderProperties();
 
-	// Chargement des textures, cette condition sera délégué dans une fonction qui retournera un bouléen
+	// Chargement des textures
 	if (!SceneRender->LoadAllActorsTexture(SceneRender->GetRenderer())) { return EXIT_ERROR; }
 	// on saisira dans cette fonction les containers à partir des dimensions de la texture
 
@@ -55,7 +56,7 @@ int main(int argc, char** argv)
 					SceneRender->MoveActorForward(-10);
 					break;
 				case SDLK_UP:
-					SceneRender->MoveActorForward(10);
+					SceneRender->MoveActorForward(15);
 					break;
 				default:
 					break;

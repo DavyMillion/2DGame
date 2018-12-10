@@ -25,7 +25,7 @@ public:
 	void UpdateRendu();
 
 	// Met à jour les coordonnées de la caméra pour qu'elle suive le joueur
-	void UpdateCameraTarget();
+	void UpdateCameraTargetPosition();
 
 	// Charge les textures de tout les actors (à terme)
 	bool LoadAllActorsTexture(SDL_Renderer* Renderer);

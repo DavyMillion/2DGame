@@ -17,6 +17,7 @@
 
 	// 0 pour désactiver les logs
 	#define PERFORMANCE_LOG 1
+	#define SEE_ACTOR_TEXTURE_CONTAINER 0
 
 #endif // !CONSTANTES_H
 

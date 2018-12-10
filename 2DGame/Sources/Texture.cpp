@@ -32,14 +32,19 @@ void CSubTexture::FreeTexture()
 
 void CSubTexture::RenderTexture(SDL_Renderer* Renderer, int x, int y, SDL_Rect* Container, double Angle, SDL_Point* CenterPosition, SDL_RendererFlip flip)
 {
-	SDL_Rect renderQuad = { x, y, GetWidthTexture(), GetHeightTexture() };
+	SDL_Rect* RenderQuad = new SDL_Rect;
+	RenderQuad->x = x;
+	RenderQuad->y = y;
+	RenderQuad->w = GetWidthTexture();
+	RenderQuad->h = GetHeightTexture();
+
 	if (Container != nullptr)
 	{
-		renderQuad.w = Container->w;
-		renderQuad.h = Container->h;
+		RenderQuad->w = Container->w;
+		RenderQuad->h = Container->h;
 	};
 	
-	SDL_RenderCopyEx(Renderer, ATexture, Container, &renderQuad, Angle, CenterPosition, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(Renderer, ATexture, Container, RenderQuad, Angle, CenterPosition, flip);
 }
 
 int CSubTexture::GetWidthTexture()
