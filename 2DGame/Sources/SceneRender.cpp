@@ -61,12 +61,8 @@ bool CGameSceneRender::ActorRender(CActor* Actor)
 
 void CGameSceneRender::UpdateRendu()
 {
-	// Clear the window and make it all bleu foncé
 	SDL_SetRenderDrawColor(ARenderer, 0, 0, 20, 255);
 	SDL_RenderClear(ARenderer);
-
-	SDL_SetRenderDrawColor(ARenderer, 255, 255, 255, 255);
-	UpdateCameraTargetPosition();
 
 	Background->RenderTexture(ARenderer, 0, 0, ACameraTarget);
 
@@ -77,8 +73,7 @@ void CGameSceneRender::UpdateRendu()
 
 	ActorRender(OurPlayer);
 
-
-	// Render the changes above
+	// Dessine tous les changements opérés sur la scène
 	SDL_RenderPresent(ARenderer);
 
 	return;
@@ -132,6 +127,18 @@ bool CGameSceneRender::LoadAllActorsTexture(SDL_Renderer* Renderer)
 	OurPlayer->SetActorTexture(Renderer, "./assets/textures/player.png");
 	if (!OurPlayer->GetActorTextureObject()->GetSDLTexture())
 		return false;
+	
+	int Ratio = 2;
+
+	// Création du Container au dimensions de la texture
+	OurPlayer->SetActorTextureContainer(
+		0, 
+		0, 
+		OurPlayer->GetActorTextureObject()->GetWidthTexture() * Ratio, 
+		OurPlayer->GetActorTextureObject()->GetHeightTexture() * Ratio
+	);
+
+	// test
 	TESTBACKGROUND();
 	return true;
 }
@@ -164,5 +171,5 @@ void CGameSceneRender::SetIncrementAngle(int p_angle)
 
 CGameSceneRender::~CGameSceneRender()
 {
-
+	// delete...
 }

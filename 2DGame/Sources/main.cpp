@@ -35,42 +35,36 @@ int main(int argc, char** argv)
 	// boucle principale du jeu
 	while (bLoop)
 	{
-		SDL_Event event;
+		SDL_Event Event;
 
 		// boucle de traitement des inputs
-		while (SDL_PollEvent(&event)) // tant qu'il y a des évènements dans la liste
+		while (SDL_PollEvent(&Event)) // tant qu'il y a des évènements dans la liste
 		{
-			if (event.type == SDL_QUIT)
-				bLoop = false;
-			else if (event.type == SDL_KEYDOWN)
+			// si l'évènement SDL_QUIT a été déclenché
+			if (Event.type == SDL_QUIT)
 			{
-				switch (event.key.keysym.sym)
-				{
-				case SDLK_RIGHT:
-					SceneRender->SetIncrementAngle(10);
-					break;
-				case SDLK_LEFT:
-					SceneRender->SetIncrementAngle(-10);
-					break;
-				case SDLK_DOWN:
-					SceneRender->MoveActorForward(-10);
-					break;
-				case SDLK_UP:
-					SceneRender->MoveActorForward(15);
-					break;
-				default:
-					break;
-				}
+				bLoop = false;
 			}
+			
+			// Réception et traitement des évènements
+			SceneRender->GetPlayerController()->EventProcessing(Event, SceneRender);
 		}
 
+		// DANS LE FUTUR, ON APPELERA UNE FONCTION QUI METTRA A JOUR TOUTES LES POSITIONS d'un coup
+		// On met à jour la position de notre joueur à partir des inputs traités
+		//....
+
+		// On met à jour la position de la caméra
+		SceneRender->UpdateCameraTargetPosition();
+
 		// (1)
-		
+
+		// On met à jour le rendu de la scène
 		SceneRender->UpdateRendu();
 		
 		// (2)
 
-		if (event.type != SDL_QUIT)
+		if (Event.type != SDL_QUIT)
 		{
 			// on ajuste ici le delay entre le calcul de cette frame et la suivante
 			Client->GetGameEngineProperties()->SetDelay(

@@ -65,6 +65,20 @@ void CActor::SetActorTexture(SDL_Renderer* Renderer, std::string path)
 void CActor::SetActorTextureContainer(SDL_Rect* TextureContainer)
 {
 	this->ATextureContainer = TextureContainer;
+
+	ACenterPositionInContainerGrid->x = ATextureContainer->w / 2;
+	ACenterPositionInContainerGrid->y = ATextureContainer->h / 2;
+}
+
+void CActor::SetActorTextureContainer(int x, int y, int w, int h)
+{
+	this->ATextureContainer->x = x;
+	this->ATextureContainer->y = y;
+	this->ATextureContainer->w = w;
+	this->ATextureContainer->h = h;
+
+	ACenterPositionInContainerGrid->x = ATextureContainer->w / 2;
+	ACenterPositionInContainerGrid->y = ATextureContainer->h / 2;
 }
 
 void CActor::SetActorRotation(int Incrementation) // système à modifier

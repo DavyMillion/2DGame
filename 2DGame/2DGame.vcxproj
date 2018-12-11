@@ -134,6 +134,7 @@
     <ClCompile Include="Sources\Actor.cpp" />
     <ClCompile Include="Sources\Client.cpp" />
     <ClCompile Include="Sources\Engine.cpp" />
+    <ClCompile Include="Sources\Input.cpp" />
     <ClCompile Include="Sources\main.cpp" />
     <ClCompile Include="Sources\PlayerController.cpp" />
     <ClCompile Include="Sources\SceneRender.cpp" />
@@ -145,6 +146,7 @@
     <ClInclude Include="Sources\Client.h" />
     <ClInclude Include="Sources\Constantes.h" />
     <ClInclude Include="Sources\Engine.h" />
+    <ClInclude Include="Sources\Input.h" />
     <ClInclude Include="Sources\PlayerController.h" />
     <ClInclude Include="Sources\SceneRender.h" />
     <ClInclude Include="Sources\SDL_headers.h" />

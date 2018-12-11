@@ -21,7 +21,6 @@ SDL_Texture* CSubTexture::LoadTextureFromFile(SDL_Renderer* Renderer, std::strin
 		return nullptr;
 	}
 	SDL_QueryTexture(ATexture, NULL, NULL, &ATextureWidth, &ATextureHeight);
-
 	return ATexture;
 }
 
@@ -45,6 +44,8 @@ void CSubTexture::RenderTexture(SDL_Renderer* Renderer, int x, int y, SDL_Rect* 
 	};
 	
 	SDL_RenderCopyEx(Renderer, ATexture, Container, RenderQuad, Angle, CenterPosition, flip);
+
+	delete RenderQuad;
 }
 
 int CSubTexture::GetWidthTexture()

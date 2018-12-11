@@ -1,5 +1,5 @@
-#ifndef ACTOR
-	#define ACTOR
+#ifndef ACTOR_H
+	#define ACTOR_H
 
 	#include "SDL_headers.h"
 	#include <iostream>
@@ -24,17 +24,19 @@
 		// Retourne la position relative au Container du centre de l'Actor
 		SDL_Point* GetActorCenterPositionInContainerGrid();
 
-		// Retourne le container de texture de l'Actor
+		// Retourne le Container de texture de l'Actor
 		SDL_Rect* GetActorTextureContainer();
 	
-		// Retourne l'angle d'inclinaison relatif à la normale (y) de l'actor en degrée
+		// Retourne l'angle d'inclinaison relatif à la normale (y) de l'Actor en degrée
 		double GetActorRelativeAngle();
 		
-		// Positionne le centre de l'actor à la position indiquée par X et Y
+		// Positionne le centre de l'Actor à la position indiquée par X et Y
 		void SetActorPosition(int CoordX, int CoordY);
 
 		void SetActorTexture(SDL_Renderer* Renderer, std::string path);
+
 		void SetActorTextureContainer(SDL_Rect*);
+		void SetActorTextureContainer(int x, int y, int w, int h);
 
 		// Incrémentation/Décrémentation de l'angle d'inclinaison de l'Actor
 		void SetActorRotation(int);
