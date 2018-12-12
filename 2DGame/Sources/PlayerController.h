@@ -1,32 +1,40 @@
 #ifndef PLAYER_CONTROLLER
-#define PLAYER_CONTROLLER
+	#define PLAYER_CONTROLLER
 
-#include <iostream>
-#include <map>
-#include "Actor.h"
+	#include <iostream>
+	#include "Actor.h"
 
-// Déclaration avancée
-class CGameSceneRender;
-struct CSubInputHandler;
+	// Déclaration avancée
+	class CGameSceneRender;
+	class CSubInputHandler;
 
-class CPlayerController : public CActor
-{
-public:
-	CPlayerController();
+	class CPlayerController : public CActor
+	{
+	public:
+		// Constructeur
+		CPlayerController();
 
-	void SetSpawnPositionPlayer(int, int); // peut-être à mettre dans Actor
+		// Destructeur
+		~CPlayerController();
 
-	void EventProcessing(SDL_Event& event, CGameSceneRender* SceneRender);
+		// Changement du point de spawn du joueur
+		void SetSpawnPositionPlayer(int x, int y); // peut-être à mettre dans Actor
 
-private:
-	typedef CActor Super;
+		// Traitement des inputs
+		void EventProcessing(CGameSceneRender* SceneRender);
+		
+		// Notre Getter sur l'objet Input
+		CSubInputHandler* GetInputHandler() const;
 
-	CSubInputHandler* Input;
-};
+	private:
+		typedef CActor Super;
 
-// Cette classe centralise le contrôle des entités du jeux (par les humains)
-// l'idée est de receptionner les events dans cette classe
-// on les traite en fonction d'une certaine vitesse saisi dans cette classe.
+		CSubInputHandler* AInputHandler;
+	};
+
+	// Cette classe centralise le contrôle des entités du jeux (par les humains)
+	// l'idée est de receptionner les events dans cette classe
+	// on les traite en fonction d'une certaine vitesse saisi dans cette classe.
 
 #endif
 

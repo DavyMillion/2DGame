@@ -1,6 +1,7 @@
 #include "SDL_headers.h"
-#include "Engine.h"
 #include "Client.h"
+#include "Engine.h"
+#include "Input.h"
 #include "Server.h"
 #include "SceneRender.h"
 #include "PlayerController.h"
@@ -16,9 +17,10 @@ int main(int argc, char** argv)
 	if (!Client->InitialisationSDL()) { return EXIT_ERROR; }
 	if (!Client->InitSceneRendering()) { return EXIT_ERROR; }
 
-	// Raccourcis développement
+	// On utilisera ces variables pour plus de clarté
 	CGameEngine* GameEngine = Client->GetGameEngineProperties();
 	CGameSceneRender* SceneRender = Client->GetSceneRenderProperties();
+	CSubInputHandler* InputHandler = SceneRender->GetPlayerController()->GetInputHandler();
 
 	// Chargement des textures
 	if (!SceneRender->LoadAllActorsTexture(SceneRender->GetRenderer())) { return EXIT_ERROR; }
@@ -30,43 +32,40 @@ int main(int argc, char** argv)
 	GameEngine->SetFramerate(GameEngine->CalculRatioFramerate(FRAME_PER_SECOND));
 	GameEngine->SetTimeAtThisFrame(clock());
 
-	int bLoop = true;
+	bool bLoop = true;
 
 	// boucle principale du jeu
 	while (bLoop)
 	{
-		SDL_Event Event;
-
-		// boucle de traitement des inputs
-		while (SDL_PollEvent(&Event)) // tant qu'il y a des évènements dans la liste
+		// Si l'utilisateur veut quitter le jeu
+		if (InputHandler->bUserWantToQuit())
 		{
-			// si l'évènement SDL_QUIT a été déclenché
-			if (Event.type == SDL_QUIT)
-			{
-				bLoop = false;
-			}
-			
-			// Réception et traitement des évènements
-			SceneRender->GetPlayerController()->EventProcessing(Event, SceneRender);
+			bLoop = false;
 		}
+		
+		// Réception et enregistrement des évènements
+		InputHandler->UpdateEvents();
 
-		// DANS LE FUTUR, ON APPELERA UNE FONCTION QUI METTRA A JOUR TOUTES LES POSITIONS d'un coup
-		// On met à jour la position de notre joueur à partir des inputs traités
-		//....
+		// Traitement des Inputs et modification de la position du joueur
+		SceneRender->GetPlayerController()->EventProcessing(SceneRender);
+
+		// prochaine modification : actor.move ici
 
 		// On met à jour la position de la caméra
 		SceneRender->UpdateCameraTargetPosition();
 
 		// (1)
 
-		// On met à jour le rendu de la scène
+		// On calcule le rendu de la scène
 		SceneRender->UpdateRendu();
 		
 		// (2)
 
-		if (Event.type != SDL_QUIT)
+		if (bLoop == true)
 		{
-			// on ajuste ici le delay entre le calcul de cette frame et la suivante
+			/* On ajuste ici le delay entre le calcul de cette frame et la suivante
+			dans le but de ne pas surcharger le CPU (et de contrôler notre framerate) */
+
 			Client->GetGameEngineProperties()->SetDelay(
 				GameEngine->GetCalculationTime(GameEngine->GetTimeAtCurrentFrame()), 
 				GameEngine->GetRatioFramerate()

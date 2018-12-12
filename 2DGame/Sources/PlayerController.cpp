@@ -1,9 +1,18 @@
 #include "PlayerController.h"
 #include "SceneRender.h"
+#include "Input.h"
 
 CPlayerController::CPlayerController()
 { 
+	// Appel du constructeur de la classe mère
 	Super::CActor();
+
+	// Création de l'instance de l'entité gérant les Inputs
+	AInputHandler = new CSubInputHandler();
+}
+
+CPlayerController::~CPlayerController()
+{
 
 }
 
@@ -12,108 +21,30 @@ void CPlayerController::SetSpawnPositionPlayer(int x, int y)
 	SetActorPosition(x, y);
 }
 
-void CPlayerController::EventProcessing(SDL_Event& Event, CGameSceneRender* SceneRender)
+void CPlayerController::EventProcessing(CGameSceneRender* SceneRender)
 {
-	/*
-	// Si une touche est pressée
-	if (Event.type == SDL_KEYDOWN && Event.key.repeat == 0)
+	if (AInputHandler->GetKeyState(SDL_SCANCODE_UP) || AInputHandler->GetKeyState(SDL_SCANCODE_W))
 	{
-		// On ajuste la vitesse
-		switch (Event.key.keysym.sym)
-		{
-		case SDLK_UP: 
-			mVelY -= DOT_VEL; 
-			break;
-		case SDLK_DOWN: 
-			mVelY += DOT_VEL; 
-			break;
-		case SDLK_LEFT: 
-			mVelX -= DOT_VEL; 
-			break;
-		case SDLK_RIGHT: 
-			mVelX += DOT_VEL; 
-			break;
-		}
-	}
-
-	// Si une touche est relachée
-	else if (Event.type == SDL_KEYUP && Event.key.repeat == 0)
-	{
-		//Adjust the velocity
-		switch (Event.key.keysym.sym)
-		{
-		case SDLK_UP: 
-			mVelY += DOT_VEL; 
-			break;
-		case SDLK_DOWN: 
-			mVelY -= DOT_VEL; 
-			break;
-		case SDLK_LEFT: 
-			mVelX += DOT_VEL; 
-			break;
-		case SDLK_RIGHT: 
-			mVelX -= DOT_VEL; 
-			break;
-		}
-	}
-	*/
-	
-	switch (Event.key.keysym.sym)
-	{
-	case SDLK_RIGHT:
-		SceneRender->SetIncrementAngle(10);
-		break;
-	case SDLK_LEFT:
-		SceneRender->SetIncrementAngle(-10);
-		break;
-	case SDLK_DOWN:
-		SceneRender->MoveActorForward(-10);
-		break;
-	case SDLK_UP:
 		SceneRender->MoveActorForward(15);
-		break;
-	default:
-		break;
 	}
-	/*
-	if (Event.type == SDL_KEYDOWN && Event.key.repeat == 0)
+	
+	if (AInputHandler->GetKeyState(SDL_SCANCODE_DOWN) || AInputHandler->GetKeyState(SDL_SCANCODE_S))
 	{
-		// On ajuste la vitesse
-		switch (Event.key.keysym.sym)
-		{
-		case SDLK_UP:
-			SceneRender->MoveActorForward(15);
-			break;
-		case SDLK_DOWN:
-			SceneRender->MoveActorForward(-10);
-			break;
-		case SDLK_LEFT:
-			SceneRender->SetIncrementAngle(-10);
-			break;
-		case SDLK_RIGHT:
-			SceneRender->SetIncrementAngle(10);
-			break;
-		}
+		SceneRender->MoveActorForward(-10);
 	}
 
-	// Si une touche est relachée
-	else if (Event.type == SDL_KEYUP && Event.key.repeat == 0)
+	if (AInputHandler->GetKeyState(SDL_SCANCODE_LEFT) || AInputHandler->GetKeyState(SDL_SCANCODE_A))
 	{
-		//Adjust the velocity
-		switch (Event.key.keysym.sym)
-		{
-		case SDLK_UP:
-			SceneRender->MoveActorForward(15);
-			break;
-		case SDLK_DOWN:
-			SceneRender->MoveActorForward(-10);
-			break;
-		case SDLK_LEFT:
-			SceneRender->SetIncrementAngle(-10);
-			break;
-		case SDLK_RIGHT:
-			SceneRender->SetIncrementAngle(10);
-			break;
-		}
-	}*/
+		SceneRender->SetIncrementAngle(-10);
+	}
+
+	if (AInputHandler->GetKeyState(SDL_SCANCODE_RIGHT) || AInputHandler->GetKeyState(SDL_SCANCODE_D))
+	{
+		SceneRender->SetIncrementAngle(10);
+	}
+}
+
+CSubInputHandler* CPlayerController::GetInputHandler() const
+{
+	return AInputHandler;
 }
