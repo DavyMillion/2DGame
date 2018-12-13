@@ -58,7 +58,48 @@ int CSubTexture::GetHeightTexture()
 	return ATextureHeight;
 }
 
+void CSubTexture::SetTexture(SDL_Texture * Texture)
+{
+	ATexture = Texture;
+	SDL_QueryTexture(ATexture, NULL, NULL, &ATextureWidth, &ATextureHeight);
+}
+
 SDL_Texture * CSubTexture::GetSDLTexture()
 {
 	return ATexture;
+}
+
+CSubAnimatedTexture::CSubAnimatedTexture()
+{
+	// Appel du Contructeur parent
+	Super::CSubTexture();
+
+	ATextureContainer = new SDL_Rect;
+}
+
+CSubAnimatedTexture::~CSubAnimatedTexture()
+{
+}
+
+SDL_Rect * CSubAnimatedTexture::GetAnimatedTextureContainer()
+{
+	return ATextureContainer;
+}
+
+void CSubAnimatedTexture::SetAnimatedTexturePosition(SDL_Point * Point)
+{
+	ATextureContainer->x = Point->x;
+	ATextureContainer->y = Point->y;
+}
+
+void CSubAnimatedTexture::SetAnimatedTexturePosition(int x, int y)
+{
+	ATextureContainer->x = x;
+	ATextureContainer->y = y;
+}
+
+void CSubAnimatedTexture::SetupWidthAndHeightAnimatedTextureContainer()
+{
+	ATextureContainer->h = GetHeightTexture();
+	ATextureContainer->w = GetWidthTexture();
 }

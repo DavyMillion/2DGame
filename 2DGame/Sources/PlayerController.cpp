@@ -25,7 +25,7 @@ void CPlayerController::EventProcessing(CGameSceneRender* SceneRender)
 {
 	if (AInputHandler->GetKeyState(SDL_SCANCODE_UP) || AInputHandler->GetKeyState(SDL_SCANCODE_W))
 	{
-		SceneRender->MoveActorForward(15);
+		SceneRender->MoveActorForward(10);
 	}
 	
 	if (AInputHandler->GetKeyState(SDL_SCANCODE_DOWN) || AInputHandler->GetKeyState(SDL_SCANCODE_S))

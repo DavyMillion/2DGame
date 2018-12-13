@@ -1,6 +1,7 @@
 #include "PlayerController.h"
 #include "SceneRender.h"
 #include "Texture.h"
+#include "Background.h"
 #include "Constantes.h"
 
 void CGameSceneRender::TESTBACKGROUND()
@@ -12,19 +13,19 @@ void CGameSceneRender::TESTBACKGROUND()
 
 CGameSceneRender::CGameSceneRender(CGameEngine* Engine, SDL_Window* Window)
 {
+	// A pour effet de bord de modifier les variables A_SCREEN_WIDTH et A_SCREEN_HEIGHT
+	SDL_GetWindowSize(Window, &A_SCREEN_WIDTH, &A_SCREEN_HEIGHT);
+
 	// Allocation mémoire des objets
 	OurPlayer = new CPlayerController();
 	ACameraTarget = new SDL_Rect;
-	
+	ABackgroundObject = new CSubBackgroundHandler(A_SCREEN_HEIGHT, A_SCREEN_WIDTH);
+
 	// Initialisation des variables
-	AWindow = Window;
 	AEngine = Engine;
 	
 	A_LEVEL_WIDTH = LEVEL_WIDTH;
 	A_LEVEL_HEIGHT = LEVEL_HEIGHT;
-
-	// A pour effet de bord de modifier les variables A_SCREEN_WIDTH et A_SCREEN_HEIGHT
-	SDL_GetWindowSize(Window, &A_SCREEN_WIDTH, &A_SCREEN_HEIGHT);
 
 	// Initialisation du SDL_Rect de la caméra
 	*ACameraTarget = { 0, 0, A_SCREEN_WIDTH, A_SCREEN_HEIGHT };
@@ -64,7 +65,8 @@ void CGameSceneRender::UpdateRendu()
 	SDL_SetRenderDrawColor(ARenderer, 0, 0, 20, 255);
 	SDL_RenderClear(ARenderer);
 
-	Background->RenderTexture(ARenderer, 0, 0, ACameraTarget);
+	//Background->RenderTexture(ARenderer, 0, 0, ACameraTarget);
+	ABackgroundObject->RenderStars(ARenderer);
 
 	// ICI : updateBackgroundTexturePosition
 
@@ -115,13 +117,18 @@ CPlayerController * CGameSceneRender::GetPlayerController() const
 	return OurPlayer;
 }
 
+CSubBackgroundHandler * CGameSceneRender::GetBackgroundObject()
+{
+	return ABackgroundObject;
+}
+
 void CGameSceneRender::SetAttributRenderer(SDL_Renderer * Renderer)
 {
 	this->ARenderer = Renderer;
 	return;
 }
 
-bool CGameSceneRender::LoadAllActorsTexture(SDL_Renderer* Renderer)
+bool CGameSceneRender::LoadAllTextures(SDL_Renderer* Renderer)
 {
 	// bientot container d'actor toussa toussa ... en attendant :
 	OurPlayer->SetActorTexture(Renderer, "./assets/textures/player.png");
@@ -138,8 +145,21 @@ bool CGameSceneRender::LoadAllActorsTexture(SDL_Renderer* Renderer)
 		OurPlayer->GetActorTextureObject()->GetHeightTexture() * Ratio
 	);
 
-	// test
-	TESTBACKGROUND();
+	// Chargement des filtres pour l'affichage du fond
+	if 
+	(
+		!ABackgroundObject->GetFilter01()->LoadTextureFromFile(Renderer, "./assets/textures/BG01.png") ||
+		!ABackgroundObject->GetFilter02()->LoadTextureFromFile(Renderer, "./assets/textures/BG02.png") ||
+		!ABackgroundObject->GetFilter03()->LoadTextureFromFile(Renderer, "./assets/textures/BG03.png") ||
+		!ABackgroundObject->GetFilter04()->LoadTextureFromFile(Renderer, "./assets/textures/BG04.png") ||
+		!ABackgroundObject->GetFilter05()->LoadTextureFromFile(Renderer, "./assets/textures/BG05.png")
+	)
+		return false;
+
+	// test, va disparaitre
+	//TESTBACKGROUND();
+
+
 	return true;
 }
 

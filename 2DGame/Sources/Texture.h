@@ -28,6 +28,8 @@
 		int GetWidthTexture();
 		int GetHeightTexture();
 
+		void SetTexture(SDL_Texture* Texture);
+
 	private:
 		// La texture en elle-même
 		SDL_Texture* ATexture;
@@ -37,4 +39,26 @@
 		int ATextureHeight; // """"
 	};
 
+	// on créé une structure fille pour pouvoir gérer les textures en mouvement 
+	// (qui ne seront pas nécessairement des acteurs)
+
+	class CSubAnimatedTexture : public CSubTexture
+	{
+	public:
+
+		CSubAnimatedTexture();
+
+		~CSubAnimatedTexture();
+
+		SDL_Rect* GetAnimatedTextureContainer();
+		void SetAnimatedTexturePosition(SDL_Point* Point);
+		void SetAnimatedTexturePosition(int x, int y);
+		void SetupWidthAndHeightAnimatedTextureContainer();
+
+	private:
+		typedef CSubTexture Super;
+
+		SDL_Rect* ATextureContainer;
+
+	};
 #endif

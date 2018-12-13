@@ -6,6 +6,7 @@ class CActor;
 class CPlayerController;
 class CGameEngine;
 class CSubTexture;
+class CSubBackgroundHandler;
 
 class CGameSceneRender
 {
@@ -28,7 +29,7 @@ public:
 	void UpdateCameraTargetPosition();
 
 	// Charge les textures de tout les actors (à terme)
-	bool LoadAllActorsTexture(SDL_Renderer* Renderer);
+	bool LoadAllTextures(SDL_Renderer* Renderer);
 
 	// Déplace l'actor vers l'avant (la direction dépend de son orientation)
 	void MoveActorForward(int);
@@ -36,6 +37,7 @@ public:
 	// Getters & Setters
 	SDL_Renderer* GetRenderer() const;
 	CPlayerController* GetPlayerController() const;
+	CSubBackgroundHandler* GetBackgroundObject();
 	void SetAttributRenderer(SDL_Renderer*);
 	void SetIncrementAngle(int);
 
@@ -60,8 +62,8 @@ private:
 	// L'objet Engine
 	CGameEngine* AEngine;
 
-	// Notre fenêtre courante
-	SDL_Window* AWindow;
+	// Notre instance du Background
+	CSubBackgroundHandler* ABackgroundObject;
 
 	// TEST
 	CSubTexture* Background;

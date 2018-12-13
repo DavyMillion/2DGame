@@ -4,8 +4,10 @@
 #include "Input.h"
 #include "Server.h"
 #include "SceneRender.h"
+#include "Background.h"
 #include "PlayerController.h"
 #include "Constantes.h"
+
 
 int main(int argc, char** argv)
 {
@@ -23,9 +25,10 @@ int main(int argc, char** argv)
 	CSubInputHandler* InputHandler = SceneRender->GetPlayerController()->GetInputHandler();
 
 	// Chargement des textures
-	if (!SceneRender->LoadAllActorsTexture(SceneRender->GetRenderer())) { return EXIT_ERROR; }
+	if (!SceneRender->LoadAllTextures(SceneRender->GetRenderer())) { return EXIT_ERROR; }
 	// on saisira dans cette fonction les containers à partir des dimensions de la texture
-
+	
+	SceneRender->GetBackgroundObject()->InitBackground();
 	SceneRender->GetPlayerController()->SetSpawnPositionPlayer(LEVEL_WIDTH / 2, LEVEL_HEIGHT / 2); // à modifier
 
 	// Contrôle de la framerate délégué à l'objet GameEngine

@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Sources\Actor.cpp" />
+    <ClCompile Include="Sources\Background.cpp" />
     <ClCompile Include="Sources\Client.cpp" />
     <ClCompile Include="Sources\Engine.cpp" />
     <ClCompile Include="Sources\Input.cpp" />
@@ -143,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Actor.h" />
+    <ClInclude Include="Sources\Background.h" />
     <ClInclude Include="Sources\Client.h" />
     <ClInclude Include="Sources\Constantes.h" />
     <ClInclude Include="Sources\Engine.h" />
