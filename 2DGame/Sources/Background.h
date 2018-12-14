@@ -22,8 +22,8 @@
 
 		// Fait le rendu des étoiles du background
 		void RenderStars(SDL_Renderer* Renderer);
-		void RenderAllSubObjects(SDL_Renderer* Renderer, std::vector<CSubAnimatedTexture*> Container);
-		void HandleAllSubObjects(CSubTexture* Filter, std::vector<CSubAnimatedTexture*> Container);
+		void RenderAllSubObjects(SDL_Renderer* Renderer, std::vector<CSubAnimatedTexture*> &Container);
+		void HandleAllSubObjects(CSubTexture* Filter, std::vector<CSubAnimatedTexture*> &Container);
 
 		// Nos Getters
 		CSubTexture* GetFilter01();

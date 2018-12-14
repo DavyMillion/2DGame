@@ -89,18 +89,75 @@ void CSubBackgroundHandler::RenderStars(SDL_Renderer* Renderer)
 {
 	for (auto Object : Instances01Container)
 	{
-		int x = Object->GetAnimatedTextureContainer()->x + 2;
-		int y = Object->GetAnimatedTextureContainer()->y + 2;
+		int x = Object->GetAnimatedTextureContainer()->x - 1;
+		int y = Object->GetAnimatedTextureContainer()->y - 1;
 		Object->SetAnimatedTexturePosition(x, y);
 	}
 
+	for (auto Object : Instances02Container)
+	{
+		int x = Object->GetAnimatedTextureContainer()->x - 3;
+		int y = Object->GetAnimatedTextureContainer()->y - 3;
+		Object->SetAnimatedTexturePosition(x, y);
+	}
+
+	for (auto Object : Instances03Container)
+	{
+		int x = Object->GetAnimatedTextureContainer()->x - 5;
+		int y = Object->GetAnimatedTextureContainer()->y - 5;
+		Object->SetAnimatedTexturePosition(x, y);
+	}
+
+	for (auto Object : Instances04Container)
+	{
+		int x = Object->GetAnimatedTextureContainer()->x - 7;
+		int y = Object->GetAnimatedTextureContainer()->y - 7;
+		Object->SetAnimatedTexturePosition(x, y);
+	}
+
+	for (auto Object : Instances05Container)
+	{
+		int x = Object->GetAnimatedTextureContainer()->x - 9;
+		int y = Object->GetAnimatedTextureContainer()->y - 9;
+		Object->SetAnimatedTexturePosition(x, y);
+	}
+
+	HandleAllSubObjects(Filter01, Instances01Container);
+	HandleAllSubObjects(Filter02, Instances02Container);
+	HandleAllSubObjects(Filter03, Instances03Container);
+	HandleAllSubObjects(Filter04, Instances04Container);
+	HandleAllSubObjects(Filter05, Instances05Container);
+
+	RenderAllSubObjects(Renderer, Instances01Container);
+	RenderAllSubObjects(Renderer, Instances02Container);
+	RenderAllSubObjects(Renderer, Instances03Container);
+	RenderAllSubObjects(Renderer, Instances04Container);
+	RenderAllSubObjects(Renderer, Instances05Container);
+
+	//std::cout << "Total Objects instancied : " << Instances01Container.size() + Instances02Container.size() + Instances03Container.size() + Instances04Container.size() + Instances05Container.size() << std::endl;
+}
+
+void CSubBackgroundHandler::RenderAllSubObjects(SDL_Renderer* Renderer, std::vector<CSubAnimatedTexture*> &Container)
+{
+	for (auto Object : Container)
+	{
+		Object->RenderTexture(
+			Renderer,
+			Object->GetAnimatedTextureContainer()->x,
+			Object->GetAnimatedTextureContainer()->y
+		);
+	}
+}
+
+void CSubBackgroundHandler::HandleAllSubObjects(CSubTexture * Filter, std::vector<CSubAnimatedTexture*> &Container)
+{
 	// parcours dans le but de déterminer le minimum
 	int minX = AScreenWidth;
 	int maxX = 0;
 	int minY = AScreenHeight;
 	int maxY = 0;
 
-	for (auto Object : Instances01Container)
+	for (auto Object : Container)
 	{
 		if (Object->GetAnimatedTextureContainer()->x < minX)
 		{
@@ -108,7 +165,7 @@ void CSubBackgroundHandler::RenderStars(SDL_Renderer* Renderer)
 		}
 	}
 
-	for (auto Object : Instances01Container)
+	for (auto Object : Container)
 	{
 		if (Object->GetAnimatedTextureContainer()->y < minY)
 		{
@@ -116,7 +173,7 @@ void CSubBackgroundHandler::RenderStars(SDL_Renderer* Renderer)
 		}
 	}
 
-	for (auto Object : Instances01Container)
+	for (auto Object : Container)
 	{
 		if (Object->GetAnimatedTextureContainer()->x > maxX)
 		{
@@ -124,7 +181,7 @@ void CSubBackgroundHandler::RenderStars(SDL_Renderer* Renderer)
 		}
 	}
 
-	for (auto Object : Instances01Container)
+	for (auto Object : Container)
 	{
 		if (Object->GetAnimatedTextureContainer()->y > maxY)
 		{
@@ -136,107 +193,88 @@ void CSubBackgroundHandler::RenderStars(SDL_Renderer* Renderer)
 
 	if (minX > 0) // on sort du cadre par la gauche aka bordel
 	{
-		for (int y = minY; y < AScreenHeight; y += GetFilter01()->GetHeightTexture())
+		for (int y = minY; y < AScreenHeight; y += Filter->GetHeightTexture())
 		{
 			FilterInstance = new CSubAnimatedTexture();
-			FilterInstance->SetTexture(Filter01->GetSDLTexture());
-			FilterInstance->SetAnimatedTexturePosition(minX - GetFilter01()->GetWidthTexture(), y);
+			FilterInstance->SetTexture(Filter->GetSDLTexture());
+			FilterInstance->SetAnimatedTexturePosition(minX - Filter->GetWidthTexture(), y);
 			FilterInstance->SetupWidthAndHeightAnimatedTextureContainer();
-			Instances01Container.push_back(FilterInstance);
+			Container.push_back(FilterInstance);
 		}
 	}
 
 	if (minY > 0) // on sort du cadre par la gauche aka bordel
 	{
-		for (int x = minX; x < AScreenWidth; x += GetFilter01()->GetWidthTexture())
+		for (int x = minX; x < AScreenWidth; x += Filter->GetWidthTexture())
 		{
 			FilterInstance = new CSubAnimatedTexture();
-			FilterInstance->SetTexture(Filter01->GetSDLTexture());
-			FilterInstance->SetAnimatedTexturePosition(x, minY - GetFilter01()->GetHeightTexture());
+			FilterInstance->SetTexture(Filter->GetSDLTexture());
+			FilterInstance->SetAnimatedTexturePosition(x, minY - Filter->GetHeightTexture());
 			FilterInstance->SetupWidthAndHeightAnimatedTextureContainer();
-			Instances01Container.push_back(FilterInstance);
+			Container.push_back(FilterInstance);
 		}
 	}
 
 	FilterInstance = new CSubAnimatedTexture();
-	FilterInstance->SetTexture(Filter01->GetSDLTexture());
-	FilterInstance->SetAnimatedTexturePosition(minX - GetFilter01()->GetWidthTexture(), minY - GetFilter01()->GetHeightTexture());
+	FilterInstance->SetTexture(Filter->GetSDLTexture());
+	FilterInstance->SetAnimatedTexturePosition(minX - Filter->GetWidthTexture(), minY - Filter->GetHeightTexture());
 	FilterInstance->SetupWidthAndHeightAnimatedTextureContainer();
-	Instances01Container.push_back(FilterInstance);
+	Container.push_back(FilterInstance);
 	// rajouter un pour les deux en même temps
 
-	if (maxX + Filter01->GetWidthTexture() < AScreenWidth) // on sort du cadre par la droite 
+	if (maxX + Filter->GetWidthTexture() < AScreenWidth) // on sort du cadre par la droite 
 	{
-		for (int y = minY; y < AScreenHeight; y += GetFilter01()->GetHeightTexture())
+		for (int y = minY; y < AScreenHeight; y += Filter->GetHeightTexture())
 		{
 			FilterInstance = new CSubAnimatedTexture();
-			FilterInstance->SetTexture(Filter01->GetSDLTexture());
-			FilterInstance->SetAnimatedTexturePosition(maxX + Filter01->GetWidthTexture(), y);
+			FilterInstance->SetTexture(Filter->GetSDLTexture());
+			FilterInstance->SetAnimatedTexturePosition(maxX + Filter->GetWidthTexture(), y);
 			FilterInstance->SetupWidthAndHeightAnimatedTextureContainer();
-			Instances01Container.push_back(FilterInstance);
+			Container.push_back(FilterInstance);
 		}
 	}
 
-	if (maxY + Filter01->GetHeightTexture() < AScreenHeight) // on sort du cadre par la droite 
+	if (maxY + Filter->GetHeightTexture() < AScreenHeight) // on sort du cadre par la droite 
 	{
-		for (int x = minX; x < AScreenWidth; x += GetFilter01()->GetWidthTexture())
+		for (int x = minX; x < AScreenWidth; x += Filter->GetWidthTexture())
 		{
 			FilterInstance = new CSubAnimatedTexture();
-			FilterInstance->SetTexture(Filter01->GetSDLTexture());
-			FilterInstance->SetAnimatedTexturePosition(x, maxY + Filter01->GetHeightTexture());
+			FilterInstance->SetTexture(Filter->GetSDLTexture());
+			FilterInstance->SetAnimatedTexturePosition(x, maxY + Filter->GetHeightTexture());
 			FilterInstance->SetupWidthAndHeightAnimatedTextureContainer();
-			Instances01Container.push_back(FilterInstance);
+			Container.push_back(FilterInstance);
 		}
 	}
 
-	// rajouter un pour les deux en même temps
-
-	std::cout << "Instances01Container size : " << Instances01Container.size() << std::endl;
-
-	int i = 0;
-	for (auto Object : Instances01Container)
+	for (int i = 0; i < Container.size(); )
 	{
-		auto Object = Instances01Container[i];
+		CSubAnimatedTexture* Object = Container[i];
 
 		// trop en retrait à gauche
 		if (Object->GetAnimatedTextureContainer()->x + Object->GetWidthTexture() < 0)
 		{
-			Instances01Container.erase(Instances01Container.begin() + i);
+			Container.erase(Container.begin() + i);
 			delete Object;
 		}
 		else if (Object->GetAnimatedTextureContainer()->x > AScreenWidth)
 		{
-			Instances01Container.erase(Instances01Container.begin() + i);
+			Container.erase(Container.begin() + i);
 			delete Object;
 		}
 		else if (Object->GetAnimatedTextureContainer()->y + Object->GetHeightTexture() < 0)
 		{
-			Instances01Container.erase(Instances01Container.begin() + i);
+			Container.erase(Container.begin() + i);
 			delete Object;
 		}
 		else if (Object->GetAnimatedTextureContainer()->y > AScreenHeight)
 		{
-			Instances01Container.erase(Instances01Container.begin() + i);
+			Container.erase(Container.begin() + i);
 			delete Object;
 		}
 		else
 		{
 			i++;
 		}
-	}
-
-	RenderAllSubObjects(Renderer, Instances01Container);
-}
-
-void CSubBackgroundHandler::RenderAllSubObjects(SDL_Renderer* Renderer, std::vector<CSubAnimatedTexture*> Container)
-{
-	for (auto Object : Container)
-	{
-		Object->RenderTexture(
-			Renderer,
-			Object->GetAnimatedTextureContainer()->x,
-			Object->GetAnimatedTextureContainer()->y
-		);
 	}
 }
 
