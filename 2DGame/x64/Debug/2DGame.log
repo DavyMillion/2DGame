@@ -1,2 +1,5 @@
 ﻿  Background.cpp
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(199): warning C4456: la déclaration de 'Object' masque la déclaration locale précédente
+  c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(197): note: voir la déclaration de 'Object'
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(197): warning C4189: 'Object' : variable locale initialisée mais non référencée
   2DGame.vcxproj -> C:\Users\Davy\source\repos\2DGame\x64\Debug\2DGame.exe

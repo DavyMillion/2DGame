@@ -39,7 +39,7 @@
 		int ATextureHeight; // """"
 	};
 
-	// on créé une structure fille pour pouvoir gérer les textures en mouvement 
+	// on créé une classe fille pour pouvoir gérer les textures en mouvement 
 	// (qui ne seront pas nécessairement des acteurs)
 
 	class CSubAnimatedTexture : public CSubTexture

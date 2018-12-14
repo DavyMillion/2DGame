@@ -16,7 +16,7 @@
 	#define FRAME_PER_SECOND 60 // pour une valeur > 60, la framerate n'est pas assuré car le calculation time manque un peu de précision.
 
 	// 0 pour désactiver les logs
-	#define PERFORMANCE_LOG 0
+	#define PERFORMANCE_LOG 1
 	#define SEE_ACTOR_TEXTURE_CONTAINER 0
 
 #endif // !CONSTANTES_H

@@ -26,6 +26,7 @@ void CSubInputHandler::UpdateEvents()
 {
 	/* Boucle de traitement des inputs : SDL_PollEvent() retourne 1
 	   si il y a encore des évènements dans la file à traiter */
+
 	while (SDL_PollEvent(&AEvent))
 	{
 		switch (AEvent.type)
