@@ -37,7 +37,7 @@ int main(int argc, char** argv)
 
 	bool bLoop = true;
 
-	// boucle principale du jeu
+	// Boucle principale du jeu
 	while (bLoop)
 	{
 		// Si l'utilisateur veut quitter le jeu

@@ -23,9 +23,9 @@ void CSubBackgroundHandler::InitBackground()
 {
 	CSubAnimatedTexture* FilterInstance = nullptr;
 
-	for (int y = 0; y < AScreenHeight; y += GetFilter01()->GetHeightTexture())
+	for (int y = -GetFilter01()->GetHeightTexture(); y < AScreenHeight; y += GetFilter01()->GetHeightTexture())
 	{
-		for (int x = 0; x < AScreenWidth; x += GetFilter01()->GetWidthTexture())
+		for (int x = -GetFilter01()->GetWidthTexture(); x < AScreenWidth; x += GetFilter01()->GetWidthTexture())
 		{
 			FilterInstance = new CSubAnimatedTexture();
 			FilterInstance->SetTexture(Filter01->GetSDLTexture());
@@ -35,10 +35,9 @@ void CSubBackgroundHandler::InitBackground()
 		}
 	}
 
-
-	for (int y = 0; y < AScreenHeight; y += GetFilter02()->GetHeightTexture())
+	for (int y = -GetFilter02()->GetHeightTexture(); y < AScreenHeight; y += GetFilter02()->GetHeightTexture())
 	{
-		for (int x = 0; x < AScreenWidth; x += GetFilter02()->GetWidthTexture())
+		for (int x = -GetFilter02()->GetWidthTexture(); x < AScreenWidth; x += GetFilter02()->GetWidthTexture())
 		{
 			FilterInstance = new CSubAnimatedTexture();
 			FilterInstance->SetTexture(Filter02->GetSDLTexture());
@@ -48,9 +47,9 @@ void CSubBackgroundHandler::InitBackground()
 		}
 	}
 
-	for (int y = 0; y < AScreenHeight; y += GetFilter03()->GetHeightTexture())
+	for (int y = -GetFilter03()->GetHeightTexture(); y < AScreenHeight; y += GetFilter03()->GetHeightTexture())
 	{
-		for (int x = 0; x < AScreenWidth; x += GetFilter03()->GetWidthTexture())
+		for (int x = -GetFilter03()->GetWidthTexture(); x < AScreenWidth; x += GetFilter03()->GetWidthTexture())
 		{
 			FilterInstance = new CSubAnimatedTexture();
 			FilterInstance->SetTexture(Filter03->GetSDLTexture());
@@ -60,9 +59,9 @@ void CSubBackgroundHandler::InitBackground()
 		}
 	}
 
-	for (int y = 0; y < AScreenHeight; y += GetFilter04()->GetHeightTexture())
+	for (int y = -GetFilter04()->GetHeightTexture(); y < AScreenHeight; y += GetFilter04()->GetHeightTexture())
 	{
-		for (int x = 0; x < AScreenWidth; x += GetFilter04()->GetWidthTexture())
+		for (int x = -GetFilter04()->GetWidthTexture(); x < AScreenWidth; x += GetFilter04()->GetWidthTexture())
 		{
 			FilterInstance = new CSubAnimatedTexture();
 			FilterInstance->SetTexture(Filter04->GetSDLTexture());
@@ -72,9 +71,9 @@ void CSubBackgroundHandler::InitBackground()
 		}
 	}
 
-	for (int y = 0; y < AScreenHeight; y += GetFilter05()->GetHeightTexture())
+	for (int y = -GetFilter05()->GetHeightTexture(); y < AScreenHeight; y += GetFilter05()->GetHeightTexture())
 	{
-		for (int x = 0; x < AScreenWidth; x += GetFilter05()->GetWidthTexture())
+		for (int x = -GetFilter05()->GetWidthTexture(); x < AScreenWidth; x += GetFilter05()->GetWidthTexture())
 		{
 			FilterInstance = new CSubAnimatedTexture();
 			FilterInstance->SetTexture(Filter05->GetSDLTexture());
@@ -103,22 +102,22 @@ void CSubBackgroundHandler::RenderStars(SDL_Renderer* Renderer)
 
 	for (auto Object : Instances03Container)
 	{
-		int x = Object->GetAnimatedTextureContainer()->x - 5;
-		int y = Object->GetAnimatedTextureContainer()->y - 5;
+		int x = Object->GetAnimatedTextureContainer()->x + 5;
+		int y = Object->GetAnimatedTextureContainer()->y + 5;
 		Object->SetAnimatedTexturePosition(x, y);
 	}
 
 	for (auto Object : Instances04Container)
 	{
-		int x = Object->GetAnimatedTextureContainer()->x - 7;
-		int y = Object->GetAnimatedTextureContainer()->y - 7;
+		int x = Object->GetAnimatedTextureContainer()->x + 7;
+		int y = Object->GetAnimatedTextureContainer()->y + 7;
 		Object->SetAnimatedTexturePosition(x, y);
 	}
 
 	for (auto Object : Instances05Container)
 	{
-		int x = Object->GetAnimatedTextureContainer()->x - 9;
-		int y = Object->GetAnimatedTextureContainer()->y - 9;
+		int x = Object->GetAnimatedTextureContainer()->x + 9;
+		int y = Object->GetAnimatedTextureContainer()->y + 9;
 		Object->SetAnimatedTexturePosition(x, y);
 	}
 
@@ -134,7 +133,7 @@ void CSubBackgroundHandler::RenderStars(SDL_Renderer* Renderer)
 	RenderAllSubObjects(Renderer, Instances04Container);
 	RenderAllSubObjects(Renderer, Instances05Container);
 
-	//std::cout << "Total Objects instancied : " << Instances01Container.size() + Instances02Container.size() + Instances03Container.size() + Instances04Container.size() + Instances05Container.size() << std::endl;
+	std::cout << "Total Background Objects instancied : " << Instances01Container.size() + Instances02Container.size() + Instances03Container.size() + Instances04Container.size() + Instances05Container.size() << std::endl;
 }
 
 void CSubBackgroundHandler::RenderAllSubObjects(SDL_Renderer* Renderer, std::vector<CSubAnimatedTexture*> &Container)
@@ -214,13 +213,6 @@ void CSubBackgroundHandler::HandleAllSubObjects(CSubTexture * Filter, std::vecto
 			Container.push_back(FilterInstance);
 		}
 	}
-
-	FilterInstance = new CSubAnimatedTexture();
-	FilterInstance->SetTexture(Filter->GetSDLTexture());
-	FilterInstance->SetAnimatedTexturePosition(minX - Filter->GetWidthTexture(), minY - Filter->GetHeightTexture());
-	FilterInstance->SetupWidthAndHeightAnimatedTextureContainer();
-	Container.push_back(FilterInstance);
-	// rajouter un pour les deux en même temps
 
 	if (maxX + Filter->GetWidthTexture() < AScreenWidth) // on sort du cadre par la droite 
 	{

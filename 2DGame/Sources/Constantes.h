@@ -11,7 +11,7 @@
 	#define LEVEL_HEIGHT 4096
 	
 	#define SIZE_X_FEN 1024
-	#define SIZE_Y_FEN 768
+	#define SIZE_Y_FEN 990
 
 	#define FRAME_PER_SECOND 60 // pour une valeur > 60, la framerate n'est pas assuré car le calculation time manque un peu de précision.
 

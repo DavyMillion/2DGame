@@ -4,7 +4,7 @@
 
 CClient::CClient()
 {
-	std::cout << "Client instance initialised" << std::endl;
+	std::cout << "Client initialised successfully !" << std::endl;
 }
 
 bool CClient::InitialisationSDL()
