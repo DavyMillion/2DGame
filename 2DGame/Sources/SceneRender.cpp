@@ -110,6 +110,11 @@ void CGameSceneRender::UpdateCameraTargetPosition()
 	}
 }
 
+void CGameSceneRender::UpdateBackground()
+{
+	ABackgroundObject->UpdateBackgroundArrangement(OurPlayer);
+}
+
 SDL_Renderer * CGameSceneRender::GetRenderer() const { return ARenderer; }
 
 CPlayerController * CGameSceneRender::GetPlayerController() const
@@ -120,6 +125,16 @@ CPlayerController * CGameSceneRender::GetPlayerController() const
 CSubBackgroundHandler * CGameSceneRender::GetBackgroundObject()
 {
 	return ABackgroundObject;
+}
+
+int CGameSceneRender::GetScreenWidth() const
+{
+	return A_LEVEL_WIDTH;
+}
+
+int CGameSceneRender::GetScreenHeight() const
+{
+	return A_LEVEL_HEIGHT;
 }
 
 void CGameSceneRender::SetAttributRenderer(SDL_Renderer * Renderer)
@@ -161,32 +176,6 @@ bool CGameSceneRender::LoadAllTextures(SDL_Renderer* Renderer)
 
 
 	return true;
-}
-
-void CGameSceneRender::MoveActorForward(int Increment) // à modifier
-{
-	double theta = OurPlayer->GetActorRelativeAngle();
-	theta = (theta * M_PI) / 180; // passage en radians
-
-	int xB = static_cast<int>( OurPlayer->GetActorAbsolutePosition()->x + Increment * sin(theta) );
-	int yB = static_cast<int>( OurPlayer->GetActorAbsolutePosition()->y + Increment * (-1) * cos(theta) );
-	
-	if (xB < 0 || xB > A_LEVEL_WIDTH)
-	{
-		xB = OurPlayer->GetActorAbsolutePosition()->x;
-	}
-
-	if (yB < 0 || yB > A_LEVEL_HEIGHT)
-	{
-		yB = OurPlayer->GetActorAbsolutePosition()->y;
-	}
-		
-	OurPlayer->SetActorPosition(xB, yB);
-}
-
-void CGameSceneRender::SetIncrementAngle(int p_angle)
-{
-	OurPlayer->SetActorRotation(p_angle);
 }
 
 CGameSceneRender::~CGameSceneRender()

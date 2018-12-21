@@ -1,6 +1,5 @@
 #include "SDL_headers.h"
 #include <iostream>
-#include <cmath>
 
 class CActor;
 class CPlayerController;
@@ -28,18 +27,19 @@ public:
 	// Met à jour les coordonnées de la caméra pour qu'elle suive le joueur
 	void UpdateCameraTargetPosition();
 
+	// Met à jour le fond
+	void UpdateBackground();
+
 	// Charge les textures de tout les actors (à terme)
 	bool LoadAllTextures(SDL_Renderer* Renderer);
-
-	// Déplace l'actor vers l'avant (la direction dépend de son orientation)
-	void MoveActorForward(int);
 
 	// Getters & Setters
 	SDL_Renderer* GetRenderer() const;
 	CPlayerController* GetPlayerController() const;
 	CSubBackgroundHandler* GetBackgroundObject();
+	int GetScreenWidth() const;
+	int GetScreenHeight() const;
 	void SetAttributRenderer(SDL_Renderer*);
-	void SetIncrementAngle(int);
 
 private:
 	// Les dimensions du niveau

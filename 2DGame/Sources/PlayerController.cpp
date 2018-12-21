@@ -9,11 +9,22 @@ CPlayerController::CPlayerController()
 
 	// Création de l'instance de l'entité gérant les Inputs
 	AInputHandler = new CSubInputHandler();
+
+	ACalculatedPos = new SDL_Point;
 }
 
 CPlayerController::~CPlayerController()
 {
 
+}
+
+void CPlayerController::CalculateNextPosition(int Increment) // à modifier
+{
+	double theta = this->GetActorRelativeAngle();
+	theta = (theta * M_PI) / 180; // passage en radians
+
+	ACalculatedPos->x = static_cast<int>(this->GetActorAbsolutePosition()->x + Increment * sin(theta));
+	ACalculatedPos->y = static_cast<int>(this->GetActorAbsolutePosition()->y + Increment * (-1) * cos(theta));
 }
 
 void CPlayerController::SetSpawnPositionPlayer(int x, int y)
@@ -25,26 +36,33 @@ void CPlayerController::EventProcessing(CGameSceneRender* SceneRender)
 {
 	if (AInputHandler->GetKeyState(SDL_SCANCODE_UP) || AInputHandler->GetKeyState(SDL_SCANCODE_W))
 	{
-		SceneRender->MoveActorForward(10);
+		this->CalculateNextPosition(10);
 	}
 	
 	if (AInputHandler->GetKeyState(SDL_SCANCODE_DOWN) || AInputHandler->GetKeyState(SDL_SCANCODE_S))
 	{
-		SceneRender->MoveActorForward(-10);
+		this->CalculateNextPosition(-10);
 	}
 
 	if (AInputHandler->GetKeyState(SDL_SCANCODE_LEFT) || AInputHandler->GetKeyState(SDL_SCANCODE_A))
 	{
-		SceneRender->SetIncrementAngle(-10);
+		// En attendant de faire le système de calcul à partir des variations de framerate
+		SceneRender->GetPlayerController()->SetActorRotation(-10);
 	}
 
 	if (AInputHandler->GetKeyState(SDL_SCANCODE_RIGHT) || AInputHandler->GetKeyState(SDL_SCANCODE_D))
 	{
-		SceneRender->SetIncrementAngle(10);
+		// En attendant
+		SceneRender->GetPlayerController()->SetActorRotation(10);
 	}
 }
 
 CSubInputHandler* CPlayerController::GetInputHandler() const
 {
 	return AInputHandler;
+}
+
+SDL_Point* CPlayerController::GetActorCalculatedPosition() const
+{
+	return ACalculatedPos;
 }

@@ -2,6 +2,7 @@
 	#define PLAYER_CONTROLLER
 
 	#include <iostream>
+	#include <cmath>
 	#include "Actor.h"
 
 	// Déclaration avancée
@@ -26,10 +27,18 @@
 		// Notre Getter sur l'objet Input
 		CSubInputHandler* GetInputHandler() const;
 
+		// Notre Getter sur la position calculée à partir des inputs
+		SDL_Point* GetActorCalculatedPosition() const;
+
 	private:
+		// Retourne un SDL_Point sur la prochaine position du joueur
+		void CalculateNextPosition(int Increment);
+
 		typedef CActor Super;
 
 		CSubInputHandler* AInputHandler;
+
+		SDL_Point* ACalculatedPos;
 	};
 
 	// Cette classe centralise le contrôle des entités du jeux (par les humains)

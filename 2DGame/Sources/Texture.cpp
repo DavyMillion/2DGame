@@ -79,6 +79,7 @@ CSubAnimatedTexture::CSubAnimatedTexture()
 
 CSubAnimatedTexture::~CSubAnimatedTexture()
 {
+	delete ATextureContainer;
 }
 
 SDL_Rect * CSubAnimatedTexture::GetAnimatedTextureContainer()

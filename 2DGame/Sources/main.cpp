@@ -30,6 +30,7 @@ int main(int argc, char** argv)
 	
 	SceneRender->GetBackgroundObject()->InitBackground();
 	SceneRender->GetPlayerController()->SetSpawnPositionPlayer(LEVEL_WIDTH / 2, LEVEL_HEIGHT / 2); // à modifier
+	SceneRender->GetBackgroundObject()->SetPlayerPos(LEVEL_WIDTH / 2, LEVEL_HEIGHT / 2);
 
 	// Contrôle de la framerate délégué à l'objet GameEngine
 	GameEngine->SetFramerate(GameEngine->CalculRatioFramerate(FRAME_PER_SECOND));
@@ -49,13 +50,20 @@ int main(int argc, char** argv)
 		// Réception et enregistrement des évènements
 		InputHandler->UpdateEvents();
 
-		// Traitement des Inputs et modification de la position du joueur
+		// Traitement des Inputs et calcul de la prochaine position du joueur
 		SceneRender->GetPlayerController()->EventProcessing(SceneRender);
-
-		// prochaine modification : actor.move ici
+		
+		// Déplacement du joueur à partir des coordonnées calculées
+		SceneRender->GetPlayerController()->MoveActor(
+			SceneRender->GetScreenWidth(),
+			SceneRender->GetScreenHeight(),
+			SceneRender->GetPlayerController()->GetActorCalculatedPosition()
+		);
 
 		// On met à jour la position de la caméra
 		SceneRender->UpdateCameraTargetPosition();
+
+		SceneRender->UpdateBackground();
 
 		// (1)
 

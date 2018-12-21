@@ -15,6 +15,9 @@
 		// Désallocation de la mémoire
 		~CActor();
 
+		// Déplace l'actor au point indiqué (la direction dépend de son orientation)
+		void MoveActor(int ScreenWidth, int ScreenHeight, SDL_Point* NextPosition);
+
 		// Retourne l'objet texture de l'Actor
 		CSubTexture* GetActorTextureObject();
 

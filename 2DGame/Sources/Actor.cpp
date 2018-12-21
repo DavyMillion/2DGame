@@ -10,6 +10,21 @@ CActor::CActor()
 	ARelativeAngle = 0.f;
 }
 
+void CActor::MoveActor(int ScreenWidth, int ScreenHeight, SDL_Point* NextPosition)
+{
+	if (NextPosition->x < 0 || NextPosition->x > ScreenWidth)
+	{
+		NextPosition->x = this->GetActorAbsolutePosition()->x;
+	}
+
+	if (NextPosition->y < 0 || NextPosition->y > ScreenHeight)
+	{
+		NextPosition->y = this->GetActorAbsolutePosition()->y;
+	}
+
+	this->SetActorPosition(NextPosition->x, NextPosition->y);
+}
+
 void CActor::CalculateAbsoluteActorCenter(SDL_Point* Point)
 {
 	// Coordonnées du point A (sommet haut gauche du container)
