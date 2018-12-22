@@ -4,14 +4,7 @@
 #include "Background.h"
 #include "Constantes.h"
 
-void CGameSceneRender::TESTBACKGROUND()
-{
-	Background = new CSubTexture;
-	Background->LoadTextureFromFile(ARenderer, "./assets/textures/testBG.png");
-	// ça va virer donc on s'en fout des sécurités
-}
-
-CGameSceneRender::CGameSceneRender(CGameEngine* Engine, SDL_Window* Window)
+CGameSceneRender::CGameSceneRender(SDL_Window* Window)
 {
 	// A pour effet de bord de modifier les variables A_SCREEN_WIDTH et A_SCREEN_HEIGHT
 	SDL_GetWindowSize(Window, &A_SCREEN_WIDTH, &A_SCREEN_HEIGHT);
@@ -20,9 +13,6 @@ CGameSceneRender::CGameSceneRender(CGameEngine* Engine, SDL_Window* Window)
 	OurPlayer = new CPlayerController();
 	ACameraTarget = new SDL_Rect;
 	ABackgroundObject = new CSubBackgroundHandler(A_SCREEN_HEIGHT, A_SCREEN_WIDTH);
-
-	// Initialisation des variables
-	AEngine = Engine;
 	
 	A_LEVEL_WIDTH = LEVEL_WIDTH;
 	A_LEVEL_HEIGHT = LEVEL_HEIGHT;
@@ -170,9 +160,6 @@ bool CGameSceneRender::LoadAllTextures(SDL_Renderer* Renderer)
 		!ABackgroundObject->GetFilter05()->LoadTextureFromFile(Renderer, "./assets/textures/BG05.png")
 	)
 		return false;
-
-	// test, va disparaitre
-	//TESTBACKGROUND();
 
 
 	return true;

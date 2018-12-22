@@ -14,27 +14,24 @@ int main(int argc, char** argv)
 	// L'instance du client
 	CClient* Client = new CClient;
 
-	// Initialisation générale de la SDL et de ses composants
-	if (!Client->InitGameEngine()) { return EXIT_ERROR; }
-	if (!Client->InitialisationSDL()) { return EXIT_ERROR; }
-	if (!Client->InitSceneRendering()) { return EXIT_ERROR; }
+	// Initialisation du Client et de la SDL
+	if (!Client->InitClient()) { return EXIT_ERROR; }
 
 	// On utilisera ces variables pour plus de clarté
-	CGameEngine* GameEngine = Client->GetGameEngineProperties();
-	CGameSceneRender* SceneRender = Client->GetSceneRenderProperties();
-	CSubInputHandler* InputHandler = SceneRender->GetPlayerController()->GetInputHandler();
+	CGameSceneRender* SceneObject = Client->GetSceneRenderProperties();
+	CSubInputHandler* InputHandler = SceneObject->GetPlayerController()->GetInputHandler();
 
 	// Chargement des textures
-	if (!SceneRender->LoadAllTextures(SceneRender->GetRenderer())) { return EXIT_ERROR; }
+	if (!SceneObject->LoadAllTextures(SceneObject->GetRenderer())) { return EXIT_ERROR; }
 	// on saisira dans cette fonction les containers à partir des dimensions de la texture
 	
-	SceneRender->GetBackgroundObject()->InitBackground();
-	SceneRender->GetPlayerController()->SetSpawnPositionPlayer(LEVEL_WIDTH / 2, LEVEL_HEIGHT / 2); // à modifier
-	SceneRender->GetBackgroundObject()->SetPlayerPos(LEVEL_WIDTH / 2, LEVEL_HEIGHT / 2);
+	SceneObject->GetBackgroundObject()->InitBackground();
+	SceneObject->GetPlayerController()->SetSpawnPositionPlayer(LEVEL_WIDTH / 2, LEVEL_HEIGHT / 2); // à modifier
+	SceneObject->GetBackgroundObject()->SetPlayerPos(LEVEL_WIDTH / 2, LEVEL_HEIGHT / 2);
 
 	// Contrôle de la framerate délégué à l'objet GameEngine
-	GameEngine->SetFramerate(GameEngine->CalculRatioFramerate(FRAME_PER_SECOND));
-	GameEngine->SetTimeAtThisFrame(clock());
+	clock_t Framerate = Engine::TicksRatioCalculation(FRAME_PER_SECOND);
+	clock_t CurrentFrameTime = Engine::GetTicks();
 
 	bool bLoop = true;
 
@@ -51,24 +48,24 @@ int main(int argc, char** argv)
 		InputHandler->UpdateEvents();
 
 		// Traitement des Inputs et calcul de la prochaine position du joueur
-		SceneRender->GetPlayerController()->EventProcessing(SceneRender);
+		SceneObject->GetPlayerController()->EventProcessing(SceneObject);
 		
 		// Déplacement du joueur à partir des coordonnées calculées
-		SceneRender->GetPlayerController()->MoveActor(
-			SceneRender->GetScreenWidth(),
-			SceneRender->GetScreenHeight(),
-			SceneRender->GetPlayerController()->GetActorCalculatedPosition()
+		SceneObject->GetPlayerController()->MoveActor(
+			SceneObject->GetScreenWidth(),
+			SceneObject->GetScreenHeight(),
+			SceneObject->GetPlayerController()->GetActorCalculatedPosition()
 		);
 
 		// On met à jour la position de la caméra
-		SceneRender->UpdateCameraTargetPosition();
+		SceneObject->UpdateCameraTargetPosition();
 
-		SceneRender->UpdateBackground();
+		SceneObject->UpdateBackground();
 
 		// (1)
 
 		// On calcule le rendu de la scène
-		SceneRender->UpdateRendu();
+		SceneObject->UpdateRendu();
 		
 		// (2)
 
@@ -77,12 +74,12 @@ int main(int argc, char** argv)
 			/* On ajuste ici le delay entre le calcul de cette frame et la suivante
 			dans le but de ne pas surcharger le CPU (et de contrôler notre framerate) */
 
-			Client->GetGameEngineProperties()->SetDelay(
-				GameEngine->GetCalculationTime(GameEngine->GetTimeAtCurrentFrame()), 
-				GameEngine->GetRatioFramerate()
+			Engine::SetDelay(
+				Engine::GetCalculationTime(CurrentFrameTime), 
+				Framerate
 			);
-
-			GameEngine->SetTimeAtThisFrame(clock());
+			
+			CurrentFrameTime = Engine::GetTicks();
 		}
 	}
 	delete Client;

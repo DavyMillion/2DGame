@@ -3,17 +3,14 @@
 
 class CActor;
 class CPlayerController;
-class CGameEngine;
 class CSubTexture;
 class CSubBackgroundHandler;
 
 class CGameSceneRender
 {
 public:
-	void TESTBACKGROUND();
-
 	// Initialisation des variables
-	CGameSceneRender(CGameEngine* Engine, SDL_Window* Window);
+	CGameSceneRender(SDL_Window* Window);
 	
 	// Désallocation de la mémoire
 	~CGameSceneRender();
@@ -59,12 +56,7 @@ private:
 	// Notre joueur
 	CPlayerController* OurPlayer;
 
-	// L'objet Engine
-	CGameEngine* AEngine;
-
 	// Notre instance du Background
 	CSubBackgroundHandler* ABackgroundObject;
 
-	// TEST
-	CSubTexture* Background;
 };

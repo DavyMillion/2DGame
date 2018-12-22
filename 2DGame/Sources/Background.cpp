@@ -89,6 +89,8 @@ void CSubBackgroundHandler::InitBackground()
 
 void CSubBackgroundHandler::UpdateBackgroundArrangement(CPlayerController* Player)
 {
+	double time = clock() / CLOCKS_PER_SEC;
+
 	if (AFormerPlayerPos.x != Player->GetActorAbsolutePosition()->x || AFormerPlayerPos.y != Player->GetActorAbsolutePosition()->y) // si mouvement
 	{
 		double theta = Player->GetActorRelativeAngle();
@@ -97,98 +99,97 @@ void CSubBackgroundHandler::UpdateBackgroundArrangement(CPlayerController* Playe
 		
 		for (auto Object : Instances01Container)
 		{
-			x = Object->GetAnimatedTextureContainer()->x + static_cast<int>(2 * sin(theta) * (-1));
-			y = Object->GetAnimatedTextureContainer()->y + static_cast<int>(2 * cos(theta));
+			x = Object->GetAnimatedTextureContainer()->x + static_cast<int>(round(2 * sin(theta)));
+			y = Object->GetAnimatedTextureContainer()->y + static_cast<int>(round(2 * cos(theta) * (-1)));
 			
 			Object->SetAnimatedTexturePosition(x, y);
 		}
-
-		std::cout << "deltax :" << 2 * sin(theta) * (-1) << std::endl;
-		std::cout << "deltay :" << 2 * cos(theta) << std::endl;
 		
 		for (auto Object : Instances02Container)
 		{
-			x = Object->GetAnimatedTextureContainer()->x + static_cast<int>(4 * sin(theta)* (-1));
-			y = Object->GetAnimatedTextureContainer()->y + static_cast<int>(4 * cos(theta));
+			x = Object->GetAnimatedTextureContainer()->x + static_cast<int>(round(4 * sin(theta)* (-1)));
+			y = Object->GetAnimatedTextureContainer()->y + static_cast<int>(round(4 * cos(theta)));
 			Object->SetAnimatedTexturePosition(x, y);
 		}
 
 		for (auto Object : Instances03Container)
 		{
-			x = Object->GetAnimatedTextureContainer()->x + static_cast<int>(6 * sin(theta)* (-1));
-			y = Object->GetAnimatedTextureContainer()->y + static_cast<int>(6 * cos(theta));
+			x = Object->GetAnimatedTextureContainer()->x + static_cast<int>(round(6 * sin(theta)* (-1)));
+			y = Object->GetAnimatedTextureContainer()->y + static_cast<int>(round(6 * cos(theta)));
 			Object->SetAnimatedTexturePosition(x, y);
 		}
 
 		for (auto Object : Instances04Container)
 		{
-			x = Object->GetAnimatedTextureContainer()->x + static_cast<int>(8 * sin(theta)* (-1));
-			y = Object->GetAnimatedTextureContainer()->y + static_cast<int>(8 * cos(theta));
+			x = Object->GetAnimatedTextureContainer()->x + static_cast<int>(round(8 * sin(theta)* (-1)));
+			y = Object->GetAnimatedTextureContainer()->y + static_cast<int>(round(8 * cos(theta)));
 			Object->SetAnimatedTexturePosition(x, y);
 		}
 
 		for (auto Object : Instances05Container)
 		{
-			x = Object->GetAnimatedTextureContainer()->x + static_cast<int>(10 * sin(theta)* (-1));
-			y = Object->GetAnimatedTextureContainer()->y + static_cast<int>(10 * cos(theta));
+			x = Object->GetAnimatedTextureContainer()->x + static_cast<int>(round(10 * sin(theta)* (-1)));
+			y = Object->GetAnimatedTextureContainer()->y + static_cast<int>(round(10 * cos(theta)));
 			Object->SetAnimatedTexturePosition(x, y);
 		}
 	}
 	else // stationnary mode
 	{
-		/*
-		int IncrementX, IncrementY;
+		if (time > lastupdate + 1)
+		{
+			int IncrementX, IncrementY;
 
-		if (AStationnaryMode == Up)
-		{
-			IncrementX = 0;
-			IncrementY = -1;
-			AStationnaryMode = Right;
-		}
-		else if (AStationnaryMode == Right)
-		{
-			IncrementX = 1;
-			IncrementY = 0;
-			AStationnaryMode = Down;
-		}
-		else if (AStationnaryMode == Down)
-		{
-			IncrementX = 0;
-			IncrementY = 1;
-			AStationnaryMode = Left;
-		}
-		else
-		{
-			IncrementX = -1;
-			IncrementY = 0;
-			AStationnaryMode = Up;
-		}
+			if (AStationnaryMode == Up)
+			{
+				IncrementX = 0;
+				IncrementY = -1;
+				AStationnaryMode = Right;
+			}
+			else if (AStationnaryMode == Right)
+			{
+				IncrementX = 1;
+				IncrementY = 0;
+				AStationnaryMode = Down;
+			}
+			else if (AStationnaryMode == Down)
+			{
+				IncrementX = 0;
+				IncrementY = 1;
+				AStationnaryMode = Left;
+			}
+			else
+			{
+				IncrementX = -1;
+				IncrementY = 0;
+				AStationnaryMode = Up;
+			}
 
-		std::cout << "IncrementX :" << IncrementX << std::endl;
-		std::cout << "IncrementY :" << IncrementY << std::endl;
+			std::cout << "IncrementX :" << IncrementX << std::endl;
+			std::cout << "IncrementY :" << IncrementY << std::endl;
 
-		int x, y;
-		for (auto Object : Instances03Container)
-		{
-			x = Object->GetAnimatedTextureContainer()->x + IncrementX;
-			y = Object->GetAnimatedTextureContainer()->y + IncrementY;
-			Object->SetAnimatedTexturePosition(x, y);
-		}
+			int x, y;
+			for (auto Object : Instances03Container)
+			{
+				x = Object->GetAnimatedTextureContainer()->x + IncrementX;
+				y = Object->GetAnimatedTextureContainer()->y + IncrementY;
+				Object->SetAnimatedTexturePosition(x, y);
+			}
 
-		for (auto Object : Instances04Container)
-		{
-			x = Object->GetAnimatedTextureContainer()->x + IncrementX;
-			y = Object->GetAnimatedTextureContainer()->y + IncrementY;
-			Object->SetAnimatedTexturePosition(x, y);
-		}
+			for (auto Object : Instances04Container)
+			{
+				x = Object->GetAnimatedTextureContainer()->x + IncrementX;
+				y = Object->GetAnimatedTextureContainer()->y + IncrementY;
+				Object->SetAnimatedTexturePosition(x, y);
+			}
 
-		for (auto Object : Instances05Container)
-		{
-			x = Object->GetAnimatedTextureContainer()->x + IncrementX;
-			y = Object->GetAnimatedTextureContainer()->y + IncrementY;
-			Object->SetAnimatedTexturePosition(x, y);
+			for (auto Object : Instances05Container)
+			{
+				x = Object->GetAnimatedTextureContainer()->x + IncrementX;
+				y = Object->GetAnimatedTextureContainer()->y + IncrementY;
+				Object->SetAnimatedTexturePosition(x, y);
+			}
+			lastupdate = clock() / CLOCKS_PER_SEC;
 		}
-		*/
 	}
 
 	// Affectation pour la prochaine frame
@@ -210,7 +211,7 @@ void CSubBackgroundHandler::RenderStars(SDL_Renderer* Renderer)
 	RenderAllSubObjects(Renderer, Instances04Container);
 	RenderAllSubObjects(Renderer, Instances05Container);
 
-	std::cout << "Total Background Objects instancied : " << Instances01Container.size() + Instances02Container.size() + Instances03Container.size() + Instances04Container.size() + Instances05Container.size() << std::endl;
+	//std::cout << "Total Background Objects instancied : " << Instances01Container.size() + Instances02Container.size() + Instances03Container.size() + Instances04Container.size() + Instances05Container.size() << std::endl;
 }
 
 void CSubBackgroundHandler::RenderAllSubObjects(SDL_Renderer* Renderer, std::vector<CSubAnimatedTexture*> &Container)

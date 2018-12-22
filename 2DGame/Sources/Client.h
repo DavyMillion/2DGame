@@ -3,8 +3,7 @@
 #include <ctime>
 #include "Constantes.h"
 
-class CGameEngine; // forward déclaration (C++11) dans le but de limiter les chaines de dépendances
-class CGameSceneRender;
+class CGameSceneRender; // forward déclaration (C++11) dans le but de limiter les chaines de dépendances
 
 class CClient
 {
@@ -13,12 +12,9 @@ public:
 	CClient();
 	~CClient();
 
-	bool InitialisationSDL();
-	bool InitGameEngine();
-	bool InitSceneRendering();
+	bool InitClient();
 
 	// Getters (accesseurs)
-	CGameEngine* GetGameEngineProperties() const;
 	CGameSceneRender* GetSceneRenderProperties() const;
 	SDL_Window* GetWindow() const;
 
@@ -27,6 +23,5 @@ public:
 	
 private:
 	SDL_Window* AWindow;
-	CGameEngine* AEngine;
 	CGameSceneRender* ASceneRender;
 };

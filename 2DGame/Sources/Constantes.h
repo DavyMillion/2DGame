@@ -13,7 +13,7 @@
 	#define SIZE_X_FEN 1280
 	#define SIZE_Y_FEN 720
 
-	#define FRAME_PER_SECOND 60 // pour une valeur > 60, la framerate n'est pas assuré car le calculation time manque un peu de précision.
+	#define FRAME_PER_SECOND 60
 
 	// 0 pour désactiver les logs
 	#define PERFORMANCE_LOG 0

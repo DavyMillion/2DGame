@@ -12,13 +12,9 @@ CActor::CActor()
 
 void CActor::MoveActor(int ScreenWidth, int ScreenHeight, SDL_Point* NextPosition)
 {
-	if (NextPosition->x < 0 || NextPosition->x > ScreenWidth)
+	if (NextPosition->x < 0 || NextPosition->x > ScreenWidth || NextPosition->y < 0 || NextPosition->y > ScreenHeight)
 	{
 		NextPosition->x = this->GetActorAbsolutePosition()->x;
-	}
-
-	if (NextPosition->y < 0 || NextPosition->y > ScreenHeight)
-	{
 		NextPosition->y = this->GetActorAbsolutePosition()->y;
 	}
 

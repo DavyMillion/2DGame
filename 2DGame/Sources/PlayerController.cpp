@@ -23,8 +23,8 @@ void CPlayerController::CalculateNextPosition(int Increment) // à modifier
 	double theta = this->GetActorRelativeAngle();
 	theta = (theta * M_PI) / 180; // passage en radians
 
-	ACalculatedPos->x = static_cast<int>(this->GetActorAbsolutePosition()->x + Increment * sin(theta));
-	ACalculatedPos->y = static_cast<int>(this->GetActorAbsolutePosition()->y + Increment * (-1) * cos(theta));
+	ACalculatedPos->x = this->GetActorAbsolutePosition()->x + static_cast<int>(round(Increment * sin(theta)));
+	ACalculatedPos->y = this->GetActorAbsolutePosition()->y + static_cast<int>(round(Increment * (-1) * cos(theta)));
 }
 
 void CPlayerController::SetSpawnPositionPlayer(int x, int y)
@@ -47,13 +47,13 @@ void CPlayerController::EventProcessing(CGameSceneRender* SceneRender)
 	if (AInputHandler->GetKeyState(SDL_SCANCODE_LEFT) || AInputHandler->GetKeyState(SDL_SCANCODE_A))
 	{
 		// En attendant de faire le système de calcul à partir des variations de framerate
-		SceneRender->GetPlayerController()->SetActorRotation(-10);
+		SceneRender->GetPlayerController()->SetActorRotation(-3);
 	}
 
 	if (AInputHandler->GetKeyState(SDL_SCANCODE_RIGHT) || AInputHandler->GetKeyState(SDL_SCANCODE_D))
 	{
 		// En attendant
-		SceneRender->GetPlayerController()->SetActorRotation(10);
+		SceneRender->GetPlayerController()->SetActorRotation(3);
 	}
 }
 

@@ -4,6 +4,7 @@
 	#include "SDL_headers.h"
 	#include <vector>
 	#include <cmath>
+	#include <ctime>
 
 	// Déclaration Avancée
 	class CSubTexture;
@@ -40,6 +41,8 @@
 
 	private:
 		SDL_Point AFormerPlayerPos;
+
+		int lastupdate;
 
 		int AScreenHeight;
 
