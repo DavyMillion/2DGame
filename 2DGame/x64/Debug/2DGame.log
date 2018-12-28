@@ -1,5 +1,5 @@
-﻿  Background.cpp
-c:\users\davy\source\repos\2dgame\2dgame\sources\background.h(74): warning C4471: 'StarsPosition' : une déclaration anticipée d'une énumération non délimitée doit avoir un type sous-jacent
+﻿  Client.cpp
+  PlayerController.cpp
   SceneRender.cpp
 c:\users\davy\source\repos\2dgame\2dgame\sources\background.h(74): warning C4471: 'StarsPosition' : une déclaration anticipée d'une énumération non délimitée doit avoir un type sous-jacent
   main.cpp

@@ -19,16 +19,18 @@ int main(int argc, char** argv)
 
 	// On utilisera ces variables pour plus de clarté
 	CGameSceneRender* SceneObject = Client->GetSceneRenderProperties();
-	CSubInputHandler* InputHandler = SceneObject->GetPlayerController()->GetInputHandler();
+	CPlayerController* OurPlayer = SceneObject->GetPlayerController();
+	CSubInputHandler* InputHandler = OurPlayer->GetInputHandler();
 
 	// Chargement des textures
-	if (!SceneObject->LoadAllTextures(SceneObject->GetRenderer())) { return EXIT_ERROR; }
-	// on saisira dans cette fonction les containers à partir des dimensions de la texture
+	if (!SceneObject->LoadAllTextures()) { return EXIT_ERROR; }
 	
-	SceneObject->GetBackgroundObject()->InitBackground();
-	SceneObject->GetPlayerController()->SetSpawnPositionPlayer(LEVEL_WIDTH / 2, LEVEL_HEIGHT / 2); // à modifier
-	SceneObject->GetBackgroundObject()->SetPlayerPos(LEVEL_WIDTH / 2, LEVEL_HEIGHT / 2);
+	// à terme, le serveur décidera du point de spawn
+	OurPlayer->SetSpawnPositionPlayer(LEVEL_WIDTH / 2, LEVEL_HEIGHT / 2);
 
+	// Initialisation des entités composant le fond
+	SceneObject->GetBackgroundObject()->InitBackground();
+	
 	// Contrôle de la framerate délégué à l'objet GameEngine
 	clock_t Framerate = Engine::TicksRatioCalculation(FRAME_PER_SECOND);
 	clock_t CurrentFrameTime = Engine::GetTicks();
@@ -38,36 +40,35 @@ int main(int argc, char** argv)
 	// Boucle principale du jeu
 	while (bLoop)
 	{
-		// Si l'utilisateur veut quitter le jeu
-		if (InputHandler->bUserWantToQuit())
-		{
-			bLoop = false;
-		}
-		
 		// Réception et enregistrement des évènements
 		InputHandler->UpdateEvents();
 
-		// Traitement des Inputs et calcul de la prochaine position du joueur
-		SceneObject->GetPlayerController()->EventProcessing(SceneObject);
+		// Traitement des Inputs et Calcul de la prochaine position du joueur
+		OurPlayer->EventProcessing(SceneObject);
 		
 		// Déplacement du joueur à partir des coordonnées calculées
-		SceneObject->GetPlayerController()->MoveActor(
-			SceneObject->GetScreenWidth(),
+		OurPlayer->MoveActor(
+			SceneObject->GetScreenWidth(), 
 			SceneObject->GetScreenHeight(),
-			SceneObject->GetPlayerController()->GetActorCalculatedPosition()
+			OurPlayer->GetActorCalculatedPosition()
 		);
 
 		// On met à jour la position de la caméra
 		SceneObject->UpdateCameraTargetPosition();
 
+		// On met à jour le fond
 		SceneObject->UpdateBackground();
 
 		// (1)
 
-		// On calcule le rendu de la scène
+		// On calcule le rendu de la scène et on affiche la frame
 		SceneObject->UpdateRendu();
-		
-		// (2)
+
+		// Si l'utilisateur veut quitter le jeu
+		if (InputHandler->bUserWantToQuit())
+		{
+			bLoop = false;
+		}
 
 		if (bLoop == true)
 		{
@@ -94,36 +95,17 @@ int main(int argc, char** argv)
 // On évite de cette manière un éventuel problème d'accès aux valeurs des variables en écriture
 // par un autre thread concurrent.
 
-// (2)
-// établir un tracking système de la position --> GameEngine (?)
+
 /*
-	std::cout << "Position X : " << CameraCalibration.x << std::endl;
-	std::cout << "Position Y : " << CameraCalibration.y << std::endl;
-	std::cout << "Position W : " << CameraCalibration.w << std::endl;
-	std::cout << "Position H : " << CameraCalibration.h << std::endl;
-*/
-
-// ARCHITECTURE
-// Classe Client (contient une instance de PlayerController et une instance de Engine)
-
-// Classe GameEngine (contient toute les fonctions de traitement de l'image... ainsi que des fonctions de log)
-// encapsulera tout le code du contrôle de la framerate
-// Log full system avec Frame ID et tout
-
-
-/* 
 A FAIRE
 
-créer des méthodes simples pour qu'à partir d'une position au milieu de (0, 0) (actor)
- calculer la position x, y du container (en inversant ducoup)
- ET DONC ARRIVER A FAIRE SPAWN LE PERSO AU MILIEU EN LUI PASSANT JUSTE LES COORDONNEES (0,0) !!!!
+ ajouter de l'aléatoire pour le flip des textures animées constituant le fond
+ ajouter de l'aléatoire pour le mouvement des étoiles en stationnary mode
 
- Mettre en place tout le système pour le scrolling context
- Iteration n°2 des inputs events
 
  REFACTORISATION DU CODE
 
- Code réseau...
+ Commencer le code réseau...
 
  AJOUT DU CODE POUR QUITTER LES SUBSYTEMS SDL
 */

@@ -36,24 +36,24 @@ void CPlayerController::EventProcessing(CGameSceneRender* SceneRender)
 {
 	if (AInputHandler->GetKeyState(SDL_SCANCODE_UP) || AInputHandler->GetKeyState(SDL_SCANCODE_W))
 	{
-		this->CalculateNextPosition(10);
+		this->CalculateNextPosition(6);
 	}
 	
 	if (AInputHandler->GetKeyState(SDL_SCANCODE_DOWN) || AInputHandler->GetKeyState(SDL_SCANCODE_S))
 	{
-		this->CalculateNextPosition(-10);
+		this->CalculateNextPosition(-6);
 	}
 
 	if (AInputHandler->GetKeyState(SDL_SCANCODE_LEFT) || AInputHandler->GetKeyState(SDL_SCANCODE_A))
 	{
 		// En attendant de faire le système de calcul à partir des variations de framerate
-		SceneRender->GetPlayerController()->SetActorRotation(-3);
+		SceneRender->GetPlayerController()->SetActorRotation(-5);
 	}
 
 	if (AInputHandler->GetKeyState(SDL_SCANCODE_RIGHT) || AInputHandler->GetKeyState(SDL_SCANCODE_D))
 	{
 		// En attendant
-		SceneRender->GetPlayerController()->SetActorRotation(3);
+		SceneRender->GetPlayerController()->SetActorRotation(5);
 	}
 }
 

@@ -39,26 +39,39 @@
 		int ATextureHeight; // """"
 	};
 
-	// on créé une classe fille pour pouvoir gérer les textures en mouvement 
-	// (qui ne seront pas nécessairement des acteurs)
-
+	/* 
+	 Classe fille de CSubTexture qui nous permettra de gérer les textures en mouvement 
+	 (qui ne seront pas nécessairement des acteurs), comme les textures du background, 
+	 les lasers...
+	*/
+	
 	class CSubAnimatedTexture : public CSubTexture
 	{
 	public:
-
+		// Constructeur
 		CSubAnimatedTexture();
 
+		// Destructeur
 		~CSubAnimatedTexture();
 
+		// Retourne le Container de la texture
 		SDL_Rect* GetAnimatedTextureContainer();
+
+		/* Fonction surchargée permettant de saisir la 
+		position à l'aide d'un SDL_Point ou de deux int */
 		void SetAnimatedTexturePosition(SDL_Point* Point);
 		void SetAnimatedTexturePosition(int x, int y);
+
+		/* Permet de faire le lien à partir d'une texture
+		entre ses données bruts et le container */
 		void SetupWidthAndHeightAnimatedTextureContainer();
 
 	private:
+		// Style de codage qui m'est propre
 		typedef CSubTexture Super;
 
+		// Le container de texture
 		SDL_Rect* ATextureContainer;
-
 	};
+
 #endif

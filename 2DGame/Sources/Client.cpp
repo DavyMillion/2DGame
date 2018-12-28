@@ -4,7 +4,7 @@
 
 CClient::CClient()
 {
-	std::cout << "Client initialised successfully !" << std::endl;
+
 }
 
 bool CClient::InitClient()
@@ -19,10 +19,8 @@ bool CClient::InitClient()
 	this->SetAttributWindow(TempWindow);
 	
 	ASceneRender = new CGameSceneRender(AWindow);
-	if (ASceneRender == nullptr)
-	{
+	if (!ASceneRender)
 		return false;
-	}
 
 	SDL_Renderer* TempRenderer = Engine::CreationRenderer(AWindow);
 	if (!TempRenderer)
@@ -31,6 +29,7 @@ bool CClient::InitClient()
 	this->ASceneRender->SetAttributRenderer(TempRenderer);
 	Engine::ConfigurationRenderer(ASceneRender->GetRenderer(), AWindow);
 
+	std::cout << "Client initialised successfully !" << std::endl;
 	return true;
 }
 

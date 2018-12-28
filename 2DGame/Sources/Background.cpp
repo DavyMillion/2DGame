@@ -107,35 +107,35 @@ void CSubBackgroundHandler::UpdateBackgroundArrangement(CPlayerController* Playe
 		
 		for (auto Object : Instances02Container)
 		{
-			x = Object->GetAnimatedTextureContainer()->x + static_cast<int>(round(4 * sin(theta)* (-1)));
-			y = Object->GetAnimatedTextureContainer()->y + static_cast<int>(round(4 * cos(theta)));
+			x = Object->GetAnimatedTextureContainer()->x + static_cast<int>(round(3 * sin(theta)* (-1)));
+			y = Object->GetAnimatedTextureContainer()->y + static_cast<int>(round(3 * cos(theta)));
 			Object->SetAnimatedTexturePosition(x, y);
 		}
 
 		for (auto Object : Instances03Container)
+		{
+			x = Object->GetAnimatedTextureContainer()->x + static_cast<int>(round(5 * sin(theta)* (-1)));
+			y = Object->GetAnimatedTextureContainer()->y + static_cast<int>(round(5 * cos(theta)));
+			Object->SetAnimatedTexturePosition(x, y);
+		}
+
+		for (auto Object : Instances04Container)
 		{
 			x = Object->GetAnimatedTextureContainer()->x + static_cast<int>(round(6 * sin(theta)* (-1)));
 			y = Object->GetAnimatedTextureContainer()->y + static_cast<int>(round(6 * cos(theta)));
 			Object->SetAnimatedTexturePosition(x, y);
 		}
 
-		for (auto Object : Instances04Container)
-		{
-			x = Object->GetAnimatedTextureContainer()->x + static_cast<int>(round(8 * sin(theta)* (-1)));
-			y = Object->GetAnimatedTextureContainer()->y + static_cast<int>(round(8 * cos(theta)));
-			Object->SetAnimatedTexturePosition(x, y);
-		}
-
 		for (auto Object : Instances05Container)
 		{
-			x = Object->GetAnimatedTextureContainer()->x + static_cast<int>(round(10 * sin(theta)* (-1)));
-			y = Object->GetAnimatedTextureContainer()->y + static_cast<int>(round(10 * cos(theta)));
+			x = Object->GetAnimatedTextureContainer()->x + static_cast<int>(round(7 * sin(theta)* (-1)));
+			y = Object->GetAnimatedTextureContainer()->y + static_cast<int>(round(7 * cos(theta)));
 			Object->SetAnimatedTexturePosition(x, y);
 		}
 	}
 	else // stationnary mode
 	{
-		if (time > lastupdate + 1)
+		if (time > lastupdate + 0.5)
 		{
 			int IncrementX, IncrementY;
 
@@ -163,9 +163,6 @@ void CSubBackgroundHandler::UpdateBackgroundArrangement(CPlayerController* Playe
 				IncrementY = 0;
 				AStationnaryMode = Up;
 			}
-
-			std::cout << "IncrementX :" << IncrementX << std::endl;
-			std::cout << "IncrementY :" << IncrementY << std::endl;
 
 			int x, y;
 			for (auto Object : Instances03Container)
@@ -211,7 +208,7 @@ void CSubBackgroundHandler::RenderStars(SDL_Renderer* Renderer)
 	RenderAllSubObjects(Renderer, Instances04Container);
 	RenderAllSubObjects(Renderer, Instances05Container);
 
-	//std::cout << "Total Background Objects instancied : " << Instances01Container.size() + Instances02Container.size() + Instances03Container.size() + Instances04Container.size() + Instances05Container.size() << std::endl;
+	std::cout << "Total Background Objects instancied : " << Instances01Container.size() + Instances02Container.size() + Instances03Container.size() + Instances04Container.size() + Instances05Container.size() << std::endl;
 }
 
 void CSubBackgroundHandler::RenderAllSubObjects(SDL_Renderer* Renderer, std::vector<CSubAnimatedTexture*> &Container)

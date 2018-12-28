@@ -55,12 +55,10 @@ void CGameSceneRender::UpdateRendu()
 	SDL_SetRenderDrawColor(ARenderer, 0, 0, 20, 255);
 	SDL_RenderClear(ARenderer);
 
-	//Background->RenderTexture(ARenderer, 0, 0, ACameraTarget);
 	ABackgroundObject->RenderStars(ARenderer);
+	//Background->RenderTexture(ARenderer, 0, 0, ACameraTarget);
 
-	// ICI : updateBackgroundTexturePosition
-
-	// à terme, un container (vector ou map) contiendra toute les entités "visibles" du joueurs
+	// à terme, un container (vector ou map) contiendra toutes les entités "visibles" du joueurs
 	// et on affichera toutes ces entités avec un for
 
 	ActorRender(OurPlayer);
@@ -77,7 +75,8 @@ void CGameSceneRender::UpdateCameraTargetPosition()
 	ACameraTarget->x = OurPlayer->GetActorAbsolutePosition()->x - A_SCREEN_WIDTH / 2;
 	ACameraTarget->y = OurPlayer->GetActorAbsolutePosition()->y - A_SCREEN_HEIGHT / 2;
 
-	// Placement de la caméra dans les cas non généraux : coin de l'écran, limite gauche, droite, haut, bas...
+	/* Placement de la caméra dans les cas non généraux : 
+	   coin de l'écran, limite gauche, droite, haut et bas */
 
 	if (ACameraTarget->x < 0)
 	{
@@ -133,10 +132,10 @@ void CGameSceneRender::SetAttributRenderer(SDL_Renderer * Renderer)
 	return;
 }
 
-bool CGameSceneRender::LoadAllTextures(SDL_Renderer* Renderer)
+bool CGameSceneRender::LoadAllTextures()
 {
 	// bientot container d'actor toussa toussa ... en attendant :
-	OurPlayer->SetActorTexture(Renderer, "./assets/textures/player.png");
+	OurPlayer->SetActorTexture(ARenderer, "./assets/textures/player.png");
 	if (!OurPlayer->GetActorTextureObject()->GetSDLTexture())
 		return false;
 	
@@ -153,11 +152,11 @@ bool CGameSceneRender::LoadAllTextures(SDL_Renderer* Renderer)
 	// Chargement des filtres pour l'affichage du fond
 	if 
 	(
-		!ABackgroundObject->GetFilter01()->LoadTextureFromFile(Renderer, "./assets/textures/BG01.png") ||
-		!ABackgroundObject->GetFilter02()->LoadTextureFromFile(Renderer, "./assets/textures/BG02.png") ||
-		!ABackgroundObject->GetFilter03()->LoadTextureFromFile(Renderer, "./assets/textures/BG03.png") ||
-		!ABackgroundObject->GetFilter04()->LoadTextureFromFile(Renderer, "./assets/textures/BG04.png") ||
-		!ABackgroundObject->GetFilter05()->LoadTextureFromFile(Renderer, "./assets/textures/BG05.png")
+		!ABackgroundObject->GetFilter01()->LoadTextureFromFile(ARenderer, "./assets/textures/BG01.png") ||
+		!ABackgroundObject->GetFilter02()->LoadTextureFromFile(ARenderer, "./assets/textures/BG02.png") ||
+		!ABackgroundObject->GetFilter03()->LoadTextureFromFile(ARenderer, "./assets/textures/BG03.png") ||
+		!ABackgroundObject->GetFilter04()->LoadTextureFromFile(ARenderer, "./assets/textures/BG04.png") ||
+		!ABackgroundObject->GetFilter05()->LoadTextureFromFile(ARenderer, "./assets/textures/BG05.png")
 	)
 		return false;
 

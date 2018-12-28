@@ -27,8 +27,8 @@ public:
 	// Met à jour le fond
 	void UpdateBackground();
 
-	// Charge les textures de tout les actors (à terme)
-	bool LoadAllTextures(SDL_Renderer* Renderer);
+	// Charge en mémoire toutes les textures nécessaire (à terme)
+	bool LoadAllTextures();
 
 	// Getters & Setters
 	SDL_Renderer* GetRenderer() const;
