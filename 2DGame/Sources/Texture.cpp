@@ -1,4 +1,5 @@
 #include "Texture.h"
+#include "Engine.h"
 
 CSubTexture::CSubTexture()
 {
@@ -17,7 +18,7 @@ SDL_Texture* CSubTexture::LoadTextureFromFile(SDL_Renderer* Renderer, std::strin
 	ATexture = IMG_LoadTexture(Renderer, path.c_str());
 	if (ATexture == nullptr)
 	{
-		std::cout << "Failed to load the following texture : " << path << "\n" << SDL_GetError() << std::endl;
+		std::cout << Engine::LogTime() << "Failed to load the following texture : " << path << "\n" << SDL_GetError() << std::endl;
 		return nullptr;
 	}
 	SDL_QueryTexture(ATexture, NULL, NULL, &ATextureWidth, &ATextureHeight);
@@ -43,7 +44,7 @@ void CSubTexture::RenderTexture(SDL_Renderer* Renderer, int x, int y, SDL_Rect* 
 		RenderQuad->h = Container->h;
 	};
 	
-	SDL_RenderCopyEx(Renderer, ATexture, Container, RenderQuad, Angle, CenterPosition, flip);
+	SDL_RenderCopyEx(Renderer, ATexture, nullptr, RenderQuad, Angle, CenterPosition, flip);
 
 	delete RenderQuad;
 }
@@ -101,6 +102,6 @@ void CSubAnimatedTexture::SetAnimatedTexturePosition(int x, int y)
 
 void CSubAnimatedTexture::SetupWidthAndHeightAnimatedTextureContainer()
 {
-	ATextureContainer->h = GetHeightTexture();
-	ATextureContainer->w = GetWidthTexture();
+	ATextureContainer->h = GetHeightTexture() * 0.7;
+	ATextureContainer->w = GetWidthTexture() * 0.7;
 }

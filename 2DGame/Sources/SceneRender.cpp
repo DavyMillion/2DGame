@@ -4,7 +4,7 @@
 #include "Background.h"
 #include "Constantes.h"
 
-CGameSceneRender::CGameSceneRender(SDL_Window* Window)
+CGameSceneRender::CGameSceneRender(SDL_Window* Window, SDL_Renderer* Renderer)
 {
 	// A pour effet de bord de modifier les variables A_SCREEN_WIDTH et A_SCREEN_HEIGHT
 	SDL_GetWindowSize(Window, &A_SCREEN_WIDTH, &A_SCREEN_HEIGHT);
@@ -19,6 +19,8 @@ CGameSceneRender::CGameSceneRender(SDL_Window* Window)
 
 	// Initialisation du SDL_Rect de la caméra
 	*ACameraTarget = { 0, 0, A_SCREEN_WIDTH, A_SCREEN_HEIGHT };
+
+	this->ARenderer = Renderer;
 }
 
 bool CGameSceneRender::ActorRender(CActor* Actor)

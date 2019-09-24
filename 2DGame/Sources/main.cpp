@@ -15,7 +15,10 @@ int main(int argc, char** argv)
 	CClient* Client = new CClient;
 
 	// Initialisation du Client et de la SDL
-	if (!Client->InitClient()) { return EXIT_ERROR; }
+	if (!Client->InitClient())
+	{ 
+		return EXIT_ERROR;
+	}
 
 	// On utilisera ces variables pour plus de clarté
 	CGameSceneRender* SceneObject = Client->GetSceneRenderProperties();
@@ -23,7 +26,10 @@ int main(int argc, char** argv)
 	CSubInputHandler* InputHandler = OurPlayer->GetInputHandler();
 
 	// Chargement des textures
-	if (!SceneObject->LoadAllTextures()) { return EXIT_ERROR; }
+	if (!SceneObject->LoadAllTextures()) 
+	{ 
+		return EXIT_ERROR; 
+	}
 	
 	// à terme, le serveur décidera du point de spawn
 	OurPlayer->SetSpawnPositionPlayer(LEVEL_WIDTH / 2, LEVEL_HEIGHT / 2);
@@ -83,6 +89,8 @@ int main(int argc, char** argv)
 			CurrentFrameTime = Engine::GetTicks();
 		}
 	}
+
+	SDL_Quit();
 	delete Client;
 	return EXIT_SUCCESS;
 }
@@ -98,10 +106,12 @@ int main(int argc, char** argv)
 
 /*
 A FAIRE
+ Modifier l'algo de spawn du background pour qu'il prenne en compte la longueur du container et non celle de la texture
 
  ajouter de l'aléatoire pour le flip des textures animées constituant le fond
  ajouter de l'aléatoire pour le mouvement des étoiles en stationnary mode
 
+ ScalingRatio à intégrer dans les classes
 
  REFACTORISATION DU CODE
 

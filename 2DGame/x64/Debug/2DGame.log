@@ -1,10 +1,2 @@
 ﻿  Client.cpp
-  PlayerController.cpp
-  SceneRender.cpp
-c:\users\davy\source\repos\2dgame\2dgame\sources\background.h(74): warning C4471: 'StarsPosition' : une déclaration anticipée d'une énumération non délimitée doit avoir un type sous-jacent
-  main.cpp
-c:\users\davy\source\repos\2dgame\2dgame\sources\background.h(74): warning C4471: 'StarsPosition' : une déclaration anticipée d'une énumération non délimitée doit avoir un type sous-jacent
-c:\users\davy\source\repos\2dgame\2dgame\sources\main.cpp(12): warning C4100: 'argv' : paramètre formel non référencé
-c:\users\davy\source\repos\2dgame\2dgame\sources\main.cpp(12): warning C4100: 'argc' : paramètre formel non référencé
-  Génération de code en cours...
   2DGame.vcxproj -> C:\Users\Davy\source\repos\2DGame\x64\Debug\2DGame.exe

@@ -4,7 +4,12 @@
 
 CClient::CClient()
 {
-
+	std::cout
+		<< "================================================================================" << std::endl
+		<< "    2DSpaceGame : another 2D Game project..." << std::endl
+		<< "    It's a simple multiplayer space shooter game, dev with SDL" << std::endl
+		<< "================================================================================" << std::endl
+		<< std::endl;
 }
 
 bool CClient::InitClient()
@@ -12,24 +17,27 @@ bool CClient::InitClient()
 	if (!Engine::InitSDL())
 		return false;
 
-	SDL_Window* TempWindow = Engine::CreationFenetre();
+	if (!Engine::InitSDL_Net())
+		return false;
+
+	SDL_Window* TempWindow = Engine::CreateWindow();
 	if (!TempWindow) 
 		return false;
 
-	this->SetAttributWindow(TempWindow);
+	this->AWindow = TempWindow;
+
+	SDL_Renderer* TempRenderer = Engine::CreateRenderer(AWindow);
+	if (!TempRenderer)
+		return false;
 	
-	ASceneRender = new CGameSceneRender(AWindow);
+	ASceneRender = new CGameSceneRender(AWindow, TempRenderer);
 	if (!ASceneRender)
 		return false;
 
-	SDL_Renderer* TempRenderer = Engine::CreationRenderer(AWindow);
-	if (!TempRenderer)
-		return false;
-
-	this->ASceneRender->SetAttributRenderer(TempRenderer);
+	// TODO : Demander à l'objet de le faire
 	Engine::ConfigurationRenderer(ASceneRender->GetRenderer(), AWindow);
 
-	std::cout << "Client initialised successfully !" << std::endl;
+	std::cout << Engine::LogTime() << "CClient::InitClient --> Success !" << std::endl;
 	return true;
 }
 
@@ -41,12 +49,6 @@ SDL_Window* CClient::GetWindow() const
 CGameSceneRender* CClient::GetSceneRenderProperties() const
 {
 	return ASceneRender;
-}
-
-void CClient::SetAttributWindow(SDL_Window * Window)
-{
-	this->AWindow = Window;
-	return;
 }
 
 

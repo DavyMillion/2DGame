@@ -12,14 +12,12 @@ public:
 	CClient();
 	~CClient();
 
+	// Initialisation générale de tout les composants du client
 	bool InitClient();
 
 	// Getters (accesseurs)
 	CGameSceneRender* GetSceneRenderProperties() const;
 	SDL_Window* GetWindow() const;
-
-	// Setters (mutateurs)
-	void SetAttributWindow(SDL_Window*);
 	
 private:
 	SDL_Window* AWindow;

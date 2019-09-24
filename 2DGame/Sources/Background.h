@@ -23,6 +23,8 @@
 		// Initialise tout les élèments essentiels à l'affichage du background
 		void InitBackground();
 
+		CSubAnimatedTexture* CreateNewTextureInstance(CSubTexture* Filter, int TexturePositionX, int TexturePositionY);
+
 		void UpdateBackgroundArrangement(CPlayerController* Player);
 
 		// Fait le rendu des étoiles du background

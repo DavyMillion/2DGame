@@ -10,7 +10,7 @@ class CGameSceneRender
 {
 public:
 	// Initialisation des variables
-	CGameSceneRender(SDL_Window* Window);
+	CGameSceneRender(SDL_Window* Window, SDL_Renderer* Renderer);
 	
 	// Désallocation de la mémoire
 	~CGameSceneRender();
