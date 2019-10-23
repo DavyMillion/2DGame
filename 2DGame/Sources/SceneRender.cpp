@@ -11,6 +11,9 @@ CGameSceneRender::CGameSceneRender(SDL_Window* Window, SDL_Renderer* Renderer)
 
 	// Allocation mémoire des objets
 	OurPlayer = new CPlayerController();
+
+	Player3 = new CPlayerController();
+
 	ACameraTarget = new SDL_Rect;
 	ABackgroundObject = new CSubBackgroundHandler(A_SCREEN_HEIGHT, A_SCREEN_WIDTH);
 	
@@ -27,10 +30,10 @@ bool CGameSceneRender::ActorRender(CActor* Actor)
 {
 	// on s'assure que le rendu de l'actor ne se fera que dans une zone bien précise
 	SDL_Rect* RenderQuad = new SDL_Rect;
-	RenderQuad->x = OurPlayer->GetActorTextureContainer()->x - ACameraTarget->x;
-	RenderQuad->y = OurPlayer->GetActorTextureContainer()->y - ACameraTarget->y;
-	RenderQuad->w = OurPlayer->GetActorTextureContainer()->w;
-	RenderQuad->h = OurPlayer->GetActorTextureContainer()->h;
+	RenderQuad->x = Actor->GetActorTextureContainer()->x - ACameraTarget->x;
+	RenderQuad->y = Actor->GetActorTextureContainer()->y - ACameraTarget->y;
+	RenderQuad->w = Actor->GetActorTextureContainer()->w;
+	RenderQuad->h = Actor->GetActorTextureContainer()->h;
 
 	if (SEE_ACTOR_TEXTURE_CONTAINER)
 	{
@@ -63,7 +66,20 @@ void CGameSceneRender::UpdateRendu()
 	// à terme, un container (vector ou map) contiendra toutes les entités "visibles" du joueurs
 	// et on affichera toutes ces entités avec un for
 
+
+	ActorRender(Player3);
 	ActorRender(OurPlayer);
+
+	std::cout << "pos player 1 x : " << OurPlayer->GetActorAbsolutePosition()->x << "\n"
+		<< "pos player 3 x : " << Player3->GetActorAbsolutePosition()->x << "\n";
+
+	/*
+	std::cout << "pos player 1 absolu x : " << OurPlayer->GetActorAbsolutePosition()->x << "\n"
+		<< "pos player 1 x : " << OurPlayer->GetActorTextureContainer()->x - ACameraTarget->x << "\n"
+		<< "pos player 3 absolu x : " << Player3->GetActorAbsolutePosition()->x << "\n" <<
+		"pos player 3 x : " << Player3->GetActorTextureContainer()->x - ACameraTarget->x << "\n";
+		*/
+
 
 	// Dessine tous les changements opérés sur la scène
 	SDL_RenderPresent(ARenderer);
@@ -151,6 +167,21 @@ bool CGameSceneRender::LoadAllTextures()
 		OurPlayer->GetActorTextureObject()->GetHeightTexture() * Ratio
 	);
 
+	/* MODIFS */
+	Player3->SetActorTexture(ARenderer, "./assets/textures/player.png");
+	if (!OurPlayer->GetActorTextureObject()->GetSDLTexture())
+		return false;
+
+	// TODO : SetActorTextureContainer -> effet de bord : modification de la position si elle a été précédemment inséré
+	// problème avec Player3
+	/* MODIFS */
+	Player3->SetActorTextureContainer(
+		0,
+		0,
+		OurPlayer->GetActorTextureObject()->GetWidthTexture() * Ratio,
+		OurPlayer->GetActorTextureObject()->GetHeightTexture() * Ratio
+	);
+
 	// Chargement des filtres pour l'affichage du fond
 	if 
 	(
@@ -162,6 +193,7 @@ bool CGameSceneRender::LoadAllTextures()
 	)
 		return false;
 
+	Player3->SetActorPosition(LEVEL_WIDTH / 2, LEVEL_HEIGHT / 2);
 
 	return true;
 }

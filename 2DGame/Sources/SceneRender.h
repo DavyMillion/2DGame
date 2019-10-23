@@ -18,6 +18,9 @@ public:
 	// Fait le rendu de l'actor
 	bool ActorRender(CActor*);
 
+	/* TEST */
+	bool ActorOtherRender(CActor*);
+
 	// Met à jour le rendu de la scène
 	void UpdateRendu();
 
@@ -55,6 +58,9 @@ private:
 
 	// Notre joueur
 	CPlayerController* OurPlayer;
+
+	// Joueur "2"
+	CPlayerController* Player3;
 
 	// Notre instance du Background
 	CSubBackgroundHandler* ABackgroundObject;

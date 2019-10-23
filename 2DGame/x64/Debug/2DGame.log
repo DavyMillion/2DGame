@@ -1,2 +1,43 @@
-﻿  Client.cpp
+﻿  Background.cpp
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.h(76): warning C4471: 'StarsPosition' : une déclaration anticipée d'une énumération non délimitée doit avoir un type sous-jacent
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(27): warning C4244: 'initialisation' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(27): warning C4244: '+=' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(29): warning C4244: 'initialisation' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(29): warning C4244: '+=' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(35): warning C4244: 'initialisation' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(35): warning C4244: '+=' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(37): warning C4244: 'initialisation' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(37): warning C4244: '+=' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(43): warning C4244: 'initialisation' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(43): warning C4244: '+=' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(45): warning C4244: 'initialisation' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(45): warning C4244: '+=' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(51): warning C4244: 'initialisation' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(51): warning C4244: '+=' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(53): warning C4244: 'initialisation' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(53): warning C4244: '+=' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(59): warning C4244: 'initialisation' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(59): warning C4244: '+=' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(61): warning C4244: 'initialisation' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(61): warning C4244: '+=' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(257): warning C4244: '+=' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(259): warning C4244: 'argument' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(265): warning C4244: '+=' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(267): warning C4244: 'argument' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(273): warning C4244: '+=' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(275): warning C4244: 'argument' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(281): warning C4244: '+=' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.cpp(283): warning C4244: 'argument' : conversion de 'double' en 'int', perte possible de données
+  Client.cpp
+  Engine.cpp
+  SceneRender.cpp
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.h(76): warning C4471: 'StarsPosition' : une déclaration anticipée d'une énumération non délimitée doit avoir un type sous-jacent
+  Texture.cpp
+c:\users\davy\source\repos\2dgame\2dgame\sources\texture.cpp(105): warning C4244: '=' : conversion de 'double' en 'int', perte possible de données
+c:\users\davy\source\repos\2dgame\2dgame\sources\texture.cpp(106): warning C4244: '=' : conversion de 'double' en 'int', perte possible de données
+  main.cpp
+c:\users\davy\source\repos\2dgame\2dgame\sources\background.h(76): warning C4471: 'StarsPosition' : une déclaration anticipée d'une énumération non délimitée doit avoir un type sous-jacent
+c:\users\davy\source\repos\2dgame\2dgame\sources\main.cpp(12): warning C4100: 'argv' : paramètre formel non référencé
+c:\users\davy\source\repos\2dgame\2dgame\sources\main.cpp(12): warning C4100: 'argc' : paramètre formel non référencé
+  Génération de code en cours...
   2DGame.vcxproj -> C:\Users\Davy\source\repos\2DGame\x64\Debug\2DGame.exe
